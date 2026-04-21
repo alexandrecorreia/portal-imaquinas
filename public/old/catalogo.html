@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Produtos - Indústria de Máquinas</title>
+    <!-- Bootstrap CSS -->
+    <link href="catalogo_arquivos/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts (aproximando Volkswagen com Roboto) -->
+    <link href="catalogo_arquivos/css2.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F5F5F5;
+            color: #1C2526;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Roboto', sans-serif;
+        }
+        .navbar-custom {
+            background-color: #00858D;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        .navbar-custom.scrolled {
+            background-color: #1D5C63;
+        }
+        .navbar-custom .navbar-brand {
+            color: white; /* Mantém o texto branco, se houver */
+            text-transform: uppercase;
+            font-weight: 400;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            padding: 10px;
+            display: inline-block;
+            order: 2;
+            border-radius: 5px; /* Bordas suaves */
+        }
+        .navbar-custom .navbar-brand img {
+            height: 76px; /* Mantém a altura fixa */
+            width: auto;
+            max-width: 200px; /* Limite máximo */
+            filter: brightness(1.2); /* Aumenta o brilho para destacar */
+            -webkit-filter: brightness(1.2); /* Compatibilidade com WebKit */
+        }
+        .navbar-custom .navbar-collapse {
+            order: 1;
+        }
+        .navbar-custom .navbar-toggler {
+            order: 0;
+        }
+        .navbar-custom .nav-link {
+            color: white;
+            text-transform: uppercase;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #00858D; /* Alterado para a cor anterior do navbar */
+        }
+        .catalog-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            flex: 1;
+            margin-top: 106px;
+        }
+        .catalog-section h2 {
+            color: #1D5C63;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+        .nav-tabs {
+            border-bottom: 2px solid #00858D;
+            justify-content: center;
+            flex-wrap: wrap;
+            background-color: #fff;
+            padding: 10px 0;
+            border-radius: 8px 8px 0 0;
+        }
+        .nav-tabs .nav-link {
+            color: #1C2526;
+            text-transform: uppercase;
+            font-weight: 500;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        .nav-tabs .nav-link:hover {
+            color: #1D5C63;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #00858D;
+            color: white;
+            border-radius: 5px;
+        }
+        .tab-content {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .product-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .product-card .card-body {
+            padding: 15px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-card h5 {
+            color: #1C2526;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .product-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        .product-card .btn {
+            background-color: #00858D;
+            color: white;
+            border: none;
+            width: 100%;
+        }
+        .product-card .btn:hover {
+            background-color: #1D5C63;
+        }
+        footer {
+            background-color: #00858D;
+            color: white;
+            padding: 20px 0;
+            width: 100%;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #1D5C63;
+        }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00858D;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            z-index: 1000;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1D5C63;
+        }
+        @media (max-width: 768px) {
+            .catalog-section {
+                margin: 20px auto;
+                margin-top: 70px;
+                padding-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="http://imah.siscwb.com.br/index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://imah.siscwb.com.br/catalogo.html">Catálogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://imah.siscwb.com.br/empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://imah.siscwb.com.br/contato.html">Contato</a>
+                    </li>
+                </ul>
+            </div>
+            <a class="navbar-brand" href="#">
+                <img src="catalogo_arquivos/logo-original-imah.png" alt="Indústria de Máquinas - IMAH">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Seção de Catálogo -->
+    <section class="catalog-section">
+        <div class="container">
+            <h2>Catálogo de Produtos</h2>
+            <!-- Menu de Abas -->
+            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="impressoras-tab" data-bs-toggle="tab" data-bs-target="#impressoras" type="button" role="tab" aria-controls="impressoras" aria-selected="true">Impressoras</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="envernizadoras-tab" data-bs-toggle="tab" data-bs-target="#envernizadoras" type="button" role="tab" aria-controls="envernizadoras" aria-selected="false" tabindex="-1">Envernizadoras</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="secagem-tab" data-bs-toggle="tab" data-bs-target="#secagem" type="button" role="tab" aria-controls="secagem" aria-selected="false" tabindex="-1">Secagem</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="laboratorios-tab" data-bs-toggle="tab" data-bs-target="#laboratorios" type="button" role="tab" aria-controls="laboratorios" aria-selected="false" tabindex="-1">Laboratórios</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="laminadoras-tab" data-bs-toggle="tab" data-bs-target="#laminadoras" type="button" role="tab" aria-controls="laminadoras" aria-selected="false" tabindex="-1">Laminadoras</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="acessorios-tab" data-bs-toggle="tab" data-bs-target="#acessorios" type="button" role="tab" aria-controls="acessorios" aria-selected="false" tabindex="-1">Acessórios</button>
+                </li>
+            </ul>
+
+            <!-- Conteúdo das Abas -->
+            <div class="tab-content" id="productTabsContent">
+                <!-- Aba Impressoras -->
+                <div class="tab-pane fade show active" id="impressoras" role="tabpanel" aria-labelledby="impressoras-tab">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+
+                <!-- Aba Envernizadoras -->
+                <div class="tab-pane fade" id="envernizadoras" role="tabpanel" aria-labelledby="envernizadoras-tab">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+
+                <!-- Aba Secagem -->
+                <div class="tab-pane fade" id="secagem" role="tabpanel" aria-labelledby="secagem-tab">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+
+                <!-- Aba Laboratórios -->
+                <div class="tab-pane fade" id="laboratorios" role="tabpanel" aria-labelledby="laboratorios-tab">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+
+                <!-- Aba Laminadoras -->
+                <div class="tab-pane fade" id="laminadoras" role="tabpanel" aria-labelledby="laminadoras-tab">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+
+                <!-- Aba Acessórios -->
+                <div class="tab-pane fade" id="acessorios" role="tabpanel" aria-labelledby="acessorios-tab">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Vintage">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Vintage 1950</h5>
+                                    <p>Modelo clássico com design robusto, ideal para impressões de alta precisão.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Moderna">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Moderna</h5>
+                                    <p>Tecnologia de ponta para impressões rápidas e detalhadas.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-card">
+                                <img src="catalogo_arquivos/photo-1600585154340-be6161a56a0c.avif" alt="Máquina Serigráfica Avançada">
+                                <div class="card-body">
+                                    <h5>Máquina Serigráfica Avançada</h5>
+                                    <p>Combina tradição e inovação para máxima eficiência.</p>
+                                    <a href="http://imah.siscwb.com.br/produto.html" class="btn">Saiba Mais</a>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p>© 2025 Indústria de Máquinas - <a href="http://www.imah.com.br/" style="color: white; text-decoration: none;">www.imah.com.br</a></p>
+        </div>
+    </footer>
+
+    <!-- Botão flutuante de WhatsApp -->
+    <a href="https://wa.me/554135576008" class="whatsapp-btn" target="_blank" title="Fale conosco no WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.926A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"></path>
+        </svg>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="catalogo_arquivos/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Script para transição do navbar -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar-custom');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        window.addEventListener('load', () => {
+            const navbarHeight = document.querySelector('.navbar-custom').offsetHeight;
+            //document.querySelector('.catalog-section').style.marginTop = `${navbarHeight + 24}px`;
+        });
+        window.addEventListener('resize', () => {
+            const navbarHeight = document.querySelector('.navbar-custom').offsetHeight;
+            //document.querySelector('.catalog-section').style.marginTop = `${navbarHeight + 24}px`;
+        });
+    </script>
+
+</body></html>

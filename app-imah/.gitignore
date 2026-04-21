@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+.env
+*.log
+storage/framework/*
+storage/logs/*
+!storage/framework/.gitkeep

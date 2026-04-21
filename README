@@ -1,0 +1,3 @@
+# RODANDO O DOCKER
+
+docker compose up -d

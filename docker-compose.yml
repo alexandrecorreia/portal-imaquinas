@@ -1,0 +1,56 @@
+services:
+  # ==================== PHP ====================
+  portal.app:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    restart: unless-stopped
+    container_name: portal.app
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - portal.redis
+    networks:
+      rede-portal:
+        ipv4_address: 172.16.0.11
+
+  # ==================== Nginx ====================
+  portal.nginx:
+    image: nginx:alpine
+    container_name: portal.nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    networks:
+      rede-portal:
+        ipv4_address: 172.16.0.12
+
+  # ==================== Redis ====================
+  portal.redis:
+    image: redis:latest
+    container_name: portal.redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      rede-portal:
+        ipv4_address: 172.16.0.15
+
+# ==================== Networks ====================
+networks:
+  rede-portal:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+
+# ==================== Volumes ====================
+volumes:
+  redis_data:
+    driver: local
+  # mysql_data:           # descomente se for usar MySQL
+  #   driver: local
