@@ -8,7 +8,10 @@ use Parsedown;
 class Page extends Model
 {
     protected $fillable = [
-        'title', 'slug', 'content', 'equipment'
+        'title',
+        'slug',
+        'content',
+        'equipament_id'
     ];
 
     protected $casts = [
