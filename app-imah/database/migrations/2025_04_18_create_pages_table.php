@@ -18,7 +18,7 @@ return new class extends Migration
             
             $table->foreignId('equipment_id')
                     ->nullable()
-                    ->constrained('equipments')
+                    ->constrained('equipaments')
                     ->nullOnDelete();            
             
             $table->boolean('is_active')->default(true); // <-- novo campo

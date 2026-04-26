@@ -13,14 +13,14 @@ class EquipmentSeeder extends Seeder
         $now = Carbon::now();
 
         $equipments = [
-            ['equipament' => 'Impressoras',    'created_at' => $now, 'updated_at' => $now],
-            ['equipament' => 'Envernizadoras', 'created_at' => $now, 'updated_at' => $now],
-            ['equipament' => 'Secagem',        'created_at' => $now, 'updated_at' => $now],
-            ['equipament' => 'Laboratórios',   'created_at' => $now, 'updated_at' => $now],
-            ['equipament' => 'Laminadoras',    'created_at' => $now, 'updated_at' => $now],
-            ['equipament' => 'Acessórios',     'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Impressoras',    'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Envernizadoras', 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Secagem',        'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Laboratórios',   'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Laminadoras',    'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'Acessórios',     'created_at' => $now, 'updated_at' => $now],
         ];
 
-        DB::table('equipments')->insert($equipments);
+        DB::table('equipaments')->insert($equipments);
     }
 }

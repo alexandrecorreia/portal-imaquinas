@@ -48,20 +48,22 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="equipment" class="form-label">Equipamento</label>
-                    <select name="equipment" id="equipment" class="form-control @error('equipment') is-invalid @enderror" required>
-                        <option value="" disabled {{ old('equipment') ? '' : 'selected' }}>Selecione uma categoria</option>
-                        <option value="impressoras" {{ old('equipment') == 'impressoras' ? 'selected' : '' }}>Impressoras</option>
-                        <option value="envernizadoras" {{ old('equipment') == 'envernizadoras' ? 'selected' : '' }}>Envernizadoras</option>
-                        <option value="secagem" {{ old('equipment') == 'secagem' ? 'selected' : '' }}>Secagem</option>
-                        <option value="laboratorios" {{ old('equipment') == 'laboratorios' ? 'selected' : '' }}>Laboratórios</option>
-                        <option value="laminadoras" {{ old('equipment') == 'laminadoras' ? 'selected' : '' }}>Laminadoras</option>
-                        <option value="acessorios" {{ old('equipment') == 'acessorios' ? 'selected' : '' }}>Acessórios</option>
-                    </select>                    
-                    @error('equipment')
+                    <label for="equipament_id" class="form-label">Equipamento</label>
+                    <select name="equipament_id" id="equipament_id" class="form-control @error('equipament_id') is-invalid @enderror" required>
+                        <option value="" disabled {{ old('equipament_id') ? '' : 'selected' }}>
+                            Selecione um equipamento
+                        </option>
+                        @foreach($equipaments as $equipament)
+                            <option value="{{ $equipament->id }}" 
+                                    {{ old('equipament_id') == $equipament->id ? 'selected' : '' }}>
+                                {{ $equipament->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('equipament_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                </div>                
                 <div class="mb-3">
                     <label for="content" class="form-label">Conteúdo (Markdown)</label>
                     <textarea name="content" id="content" class czujlass="form-control @error('content') is-invalid @enderror">{{ old('content', $defaultTemplate) }}</textarea>

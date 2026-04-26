@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\Equipament;
 use Illuminate\Http\Request;
+
 use Parsedown;
 
 class PageController extends Controller
@@ -49,8 +51,9 @@ Fácil, rápida, versátil. Painel simples, secagem turbo.
 
 Pouca manutenção e máxima performance.
 EOD;
+        $equipaments = Equipament::orderBy('name')->get();
 
-        return view('admin.pages.create', compact('defaultTemplate'));
+        return view('admin.pages.create', compact('defaultTemplate', 'equipaments'));
     }
 
     public function store(Request $request)
@@ -59,10 +62,11 @@ EOD;
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:pages,slug',
             'content' => 'required|string',
-            'equipment' => 'nullable|string|max:255',
+            'equipament_id' => 'nullable|string|max:255',
         ]);
 
         $page = Page::create($request->all());
+        
         $page->parseContent();
 
         return redirect()->route('admin.pages.index')->with('success', 'Página criada com sucesso!');
@@ -77,7 +81,9 @@ EOD;
 
     public function edit(Page $page)
     {
-        return view('admin.pages.edit', compact('page'));
+        $equipaments = Equipament::orderBy('name')->get();
+
+        return view('admin.pages.edit', compact('page', 'equipaments'));
     }
 
     public function update(Request $request, Page $page)
@@ -86,10 +92,11 @@ EOD;
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:pages,slug,' . $page->id,
             'content' => 'required|string',
-            'equipment' => 'nullable|string|max:255',
+            'equipment_id' => 'nullable|string|max:255',
         ]);
 
         $page->update($request->all());
+
         $page->parseContent();
 
         return redirect()->route('admin.pages.index')->with('success', 'Página atualizada com sucesso!');
@@ -98,6 +105,7 @@ EOD;
     public function destroy(Page $page)
     {
         $page->delete();
+
         return redirect()->route('admin.pages.index')->with('success', 'Página excluída com sucesso!');
     }
 
