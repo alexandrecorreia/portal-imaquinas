@@ -16,7 +16,7 @@ return new class extends Migration
             // Markdown completo
             $table->text('content'); 
             
-            $table->foreignId('equipment_id')
+            $table->foreignId('equipament_id')
                     ->nullable()
                     ->constrained('equipaments')
                     ->nullOnDelete();            
