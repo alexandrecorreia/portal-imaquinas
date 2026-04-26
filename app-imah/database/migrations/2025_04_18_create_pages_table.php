@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePagesTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -12,13 +12,17 @@ class CreatePagesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('content'); // Markdown completo
-            $table->string('equipment')->nullable(); // Ex.: Impressoras, Envernizadoras
-            $table->text('images')->nullable(); // Lista de imagens (ex.: img1.jpg, img2.jpg)
-            $table->string('video')->nullable(); // Nome do vídeo (ex.: video.mp4)
-            $table->string('pdf')->nullable(); // Nome do PDF (ex.: catalogo.pdf)
-            $table->text('description')->nullable(); // Descrição extraída do Markdown
-            $table->text('usability')->nullable(); // Usabilidade extraída do Markdown
+            
+            // Markdown completo
+            $table->text('content'); 
+            
+            $table->foreignId('equipment_id')
+                    ->nullable()
+                    ->constrained('equipments')
+                    ->nullOnDelete();            
+            
+            $table->boolean('is_active')->default(true); // <-- novo campo
+            
             $table->timestamps();
         });
     }
@@ -27,4 +31,4 @@ class CreatePagesTable extends Migration
     {
         Schema::dropIfExists('pages');
     }
-}
+};
