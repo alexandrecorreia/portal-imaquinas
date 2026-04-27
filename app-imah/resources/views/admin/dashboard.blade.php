@@ -3,7 +3,55 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <h1 class="mt-4 mb-4">Dashboard</h1>
+    <h1 class="mt-4 mb-4">Dashboard - {{ env('APP_NAME_DASHBOARD')}}</h1>
+
+    <!-- ====================== PARTE DE CIMA - ADMINISTRAÇÃO DE EQUIPAMENTOS ====================== -->
+    <h2 class="mt-4 mb-3" style="color: #00858D;">Administração</h2>
+    
+    <div class="row">
+        <!-- Card Equipamentos (funcional) -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #00858D;">Equipamentos</h5>
+                    <p class="card-text">Total: {{ $totalEquipaments ?? 0 }}</p>
+                    <p class="card-text">Cadastre e gerencie os equipamentos.</p>
+                    <a href="{{ route('admin.equipaments.index') }}" 
+                       class="btn btn-primary" 
+                       style="background-color: #00858D; border-color: #00858D;">
+                        Acessar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card futuro 1 (placeholder) -->
+        <div class="col-md-4">
+            <div class="card mb-4 border-secondary">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Próximo Módulo</h5>
+                    <p class="card-text">Em breve...</p>
+                    <button class="btn btn-secondary" disabled>Em desenvolvimento</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card futuro 2 (placeholder) -->
+        <div class="col-md-4">
+            <div class="card mb-4 border-secondary">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Próximo Módulo</h5>
+                    <p class="card-text">Em breve...</p>
+                    <button class="btn btn-secondary" disabled>Em desenvolvimento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- ====================== PARTE DE BAIXO - MÍDIA E CONTEÚDO (mantido igual) ====================== -->
+    <h2 class="mb-3" style="color: #00858D;">Mídia e Conteúdo</h2>
 
     <div class="row">
         <div class="col-md-4">

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminUploadController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\EquipamentController;
 use Illuminate\Support\Facades\Route;
 
 // Redireciona /admin para /admin/login
@@ -19,6 +20,10 @@ Route::get('/admin/dashboard', function () {
 })->middleware('admin.auth')->name('admin.dashboard');
 
 Route::middleware('admin.auth')->group(function () {
+    
+    // Rotas para administrar equipamentos
+    Route::resource('admin/equipaments', EquipamentController::class)->names('admin.equipaments');
+
     // Rotas de uploads
     Route::get('/admin/imagens', [AdminUploadController::class, 'indexImages'])->name('admin.imagens');
     Route::get('/admin/videos', [AdminUploadController::class, 'indexVideos'])->name('admin.videos');
@@ -35,6 +40,7 @@ Route::middleware('admin.auth')->group(function () {
     Route::put('/admin/pages/{page}', [PageController::class, 'update'])->name('admin.pages.update');
     Route::delete('/admin/pages/{page}', [PageController::class, 'destroy'])->name('admin.pages.destroy');
     Route::post('/admin/pages/preview', [PageController::class, 'preview'])->name('admin.pages.preview');
+
 });
 
 // Rota publica para downloads

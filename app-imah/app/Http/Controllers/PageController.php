@@ -130,12 +130,14 @@ EOD;
     public function dashboard()
     {
         $totalPages = Page::count();
+        
         // Contar arquivos nas pastas de uploads
         $totalImages = count(glob(storage_path('app/public/uploads/imagem/*')));
         $totalVideos = count(glob(storage_path('app/public/uploads/video/*')));
         $totalPdfs = count(glob(storage_path('app/public/uploads/pdf/*')));
+        $totalEquipaments = Equipament::count();
     
-        return view('admin.dashboard', compact('totalPages', 'totalImages', 'totalVideos', 'totalPdfs'));
+        return view('admin.dashboard', compact('totalPages', 'totalImages', 'totalVideos', 'totalPdfs', 'totalEquipaments'));
     }    
 
     public function equipments()
