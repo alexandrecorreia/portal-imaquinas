@@ -27,11 +27,16 @@
 
         <!-- Card futuro 1 (placeholder) -->
         <div class="col-md-4">
-            <div class="card mb-4 border-secondary">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title text-muted">Próximo Módulo</h5>
-                    <p class="card-text">Em breve...</p>
-                    <button class="btn btn-secondary" disabled>Em desenvolvimento</button>
+                    <h5 class="card-title" style="color: #00858D;">Segmentos</h5>
+                    <p class="card-text">Total: {{ $totalSegments ?? 0 }}</p>
+                    <p class="card-text">Cadastre e gerencie os segmentos.</p>
+                    <a href="{{ route('admin.segments.index') }}" 
+                       class="btn btn-primary" 
+                       style="background-color: #00858D; border-color: #00858D;">
+                        Acessar
+                    </a>
                 </div>
             </div>
         </div>

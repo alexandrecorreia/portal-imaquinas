@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Equipament extends Model
+class Segment extends Model
 {
-    protected $table = 'equipaments';   // nome exato da tabela que você criou
+    protected $table = 'segments';
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
     ];
 
     public function pages()

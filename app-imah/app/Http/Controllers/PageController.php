@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\Equipament;
+use App\Models\Segment;
 use Illuminate\Http\Request;
 
 use Parsedown;
@@ -136,8 +137,10 @@ EOD;
         $totalVideos = count(glob(storage_path('app/public/uploads/video/*')));
         $totalPdfs = count(glob(storage_path('app/public/uploads/pdf/*')));
         $totalEquipaments = Equipament::count();
+        $totalSegments = Segment::count();
     
-        return view('admin.dashboard', compact('totalPages', 'totalImages', 'totalVideos', 'totalPdfs', 'totalEquipaments'));
+        return view('admin.dashboard', 
+            compact('totalPages', 'totalImages', 'totalVideos', 'totalPdfs', 'totalEquipaments', 'totalSegments'));
     }    
 
     public function equipments()

@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\EquipamentController;
+use App\Http\Controllers\SegmentController;
 use Illuminate\Support\Facades\Route;
 
 // Redireciona /admin para /admin/login
@@ -23,6 +24,9 @@ Route::middleware('admin.auth')->group(function () {
     
     // Rotas para administrar equipamentos
     Route::resource('admin/equipaments', EquipamentController::class)->names('admin.equipaments');
+
+    // Rotas para administrar segmentos
+    Route::resource('admin/segments', SegmentController::class)->names('admin.segments');
 
     // Rotas de uploads
     Route::get('/admin/imagens', [AdminUploadController::class, 'indexImages'])->name('admin.imagens');
