@@ -9,7 +9,7 @@
     <h2 class="mt-4 mb-3" style="color: #00858D;">Administração</h2>
     
     <div class="row">
-        <!-- Card Equipamentos (funcional) -->
+        <!-- Card Equipamentos -->
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <!-- Card futuro 1 (placeholder) -->
+        <!-- Card Segmentos  -->
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
@@ -41,8 +41,8 @@
             </div>
         </div>
 
-        <!-- Card futuro 2 (placeholder) -->
-        <div class="col-md-4">
+        <!-- Card futuro 2 -->
+        <!-- <div class="col-md-4">
             <div class="card mb-4 border-secondary">
                 <div class="card-body">
                     <h5 class="card-title text-muted">Próximo Módulo</h5>
@@ -50,7 +50,7 @@
                     <button class="btn btn-secondary" disabled>Em desenvolvimento</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <hr class="my-5">

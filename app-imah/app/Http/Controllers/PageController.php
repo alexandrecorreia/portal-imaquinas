@@ -53,22 +53,27 @@ Fácil, rápida, versátil. Painel simples, secagem turbo.
 Pouca manutenção e máxima performance.
 EOD;
         $equipaments = Equipament::orderBy('name')->get();
-
-        return view('admin.pages.create', compact('defaultTemplate', 'equipaments'));
+        $segments    = Segment::orderBy('name')->get();
+        
+        return view('admin.pages.create', compact('defaultTemplate', 'equipaments', 'segments'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:pages,slug',
-            'content' => 'required|string',
+            'title'         => 'required|string|max:255',
+            'slug'          => 'required|string|max:255|unique:pages,slug',
+            'content'       => 'required|string',
             'equipament_id' => 'nullable|string|max:255',
+            'segments'      => 'nullable|array',
+            'segments.*'    => 'exists:segments,id',            
         ]);
 
-        $page = Page::create($request->all());
-        
-        $page->parseContent();
+        $page = Page::create($request->only(['title', 'slug', 'content', 'equipament_id']));
+
+        if ($request->has('segments')) {
+            $page->segments()->sync($request->segments);
+        }        
 
         return redirect()->route('admin.pages.index')->with('success', 'Página criada com sucesso!');
     }
@@ -83,8 +88,9 @@ EOD;
     public function edit(Page $page)
     {
         $equipaments = Equipament::orderBy('name')->get();
+        $segments    = Segment::orderBy('name')->get();
 
-        return view('admin.pages.edit', compact('page', 'equipaments'));
+        return view('admin.pages.edit', compact('page', 'equipaments','segments'));
     }
 
     public function update(Request $request, Page $page)
@@ -94,13 +100,20 @@ EOD;
             'slug' => 'required|string|max:255|unique:pages,slug,' . $page->id,
             'content' => 'required|string',
             'equipment_id' => 'nullable|string|max:255',
+            'segments'      => 'nullable|array',
+            'segments.*'    => 'exists:segments,id',            
         ]);
 
-        $page->update($request->all());
+        $page->update($request->only(['title', 'slug', 'content', 'equipament_id']));
 
-        $page->parseContent();
+        if ($request->has('segments')) {
+            $page->segments()->sync($request->segments);
+        } else {
+            $page->segments()->detach(); // remove todos se nenhum for enviado
+        }
 
-        return redirect()->route('admin.pages.index')->with('success', 'Página atualizada com sucesso!');
+        return redirect()->route('admin.pages.index')
+                        ->with('success', 'Página atualizada com sucesso!');
     }
 
     public function destroy(Page $page)

@@ -60,4 +60,16 @@ class Page extends Model
     {
         return is_array($value) ? $value : (json_decode($value, true) ?: []);
     }
+
+    public function equipament()
+    {
+        return $this->belongsTo(Equipament::class);
+    }
+
+    
+    public function segments()
+    {
+        return $this->belongsToMany(Segment::class, 'page_segment');
+    }
+
 }

@@ -63,7 +63,19 @@
                     @error('equipament_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>             
+                </div>
+                <div class="mb-3">
+                    <label for="segments" class="form-label">Segmentos <small class="text-muted">(segure Ctrl para selecionar vários)</small></label>
+                    <select name="segments[]" id="segments" class="form-control @error('segments') is-invalid @enderror" multiple size="6">
+                        @foreach($segments as $segment)
+                            <option value="{{ $segment->id }}" 
+                                    {{ $page->segments->contains($segment->id) || in_array($segment->id, old('segments', [])) ? 'selected' : '' }}>
+                                {{ $segment->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('segments') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>                
                 <div class="mb-3">
                     <label for="content" class="form-label">Conteúdo (Markdown)</label>
                     <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror">{{ old('content', $page->content) }}</textarea>
