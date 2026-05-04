@@ -30,29 +30,10 @@ class PageController extends Controller
 
     public function create()
     {
-        $defaultTemplate = <<<EOD
-[images]: img1.jpg, img2.jpg, img3.jpg
-[video]: video.mp4
-[pdf]: catalogo.pdf
+        $defaultTemplate = view('admin.pages.default-template')->render();
 
-# Descrição
-A **Maquina Ipsum** é o topo da impressão retrô-mod. Une estilo 50s com tech moderna: precisa, durável, ideal p/ tecidos, plásticos e metais.
-
-- **XXX:** 2x1x1m  
-- **YYY:** Até 500 impressões/hora
-- **TTT:** 350 kg
-- **WWW:** Aço reforçado com acabamento anticorrosivo
-
-# Usabilidade
-Fácil, rápida, versátil. Painel simples, secagem turbo.
-
-- Camisetas
-- Embalagens
-- Arte em geral
-
-Pouca manutenção e máxima performance.
-EOD;
         $equipaments = Equipament::orderBy('name')->get();
+        
         $segments    = Segment::orderBy('name')->get();
         
         return view('admin.pages.create', compact('defaultTemplate', 'equipaments', 'segments'));
@@ -66,10 +47,12 @@ EOD;
             'content'       => 'required|string',
             'equipament_id' => 'nullable|string|max:255',
             'segments'      => 'nullable|array',
-            'segments.*'    => 'exists:segments,id',            
+            'segments.*'    => 'exists:segments,id',
+            'is_active'     => 'boolean',
+            'condition'     => 'in:novo,usado'            
         ]);
 
-        $page = Page::create($request->only(['title', 'slug', 'content', 'equipament_id']));
+        $page = Page::create($request->only(['title', 'slug', 'content', 'equipament_id','is_active','condition']));
 
         if ($request->has('segments')) {
             $page->segments()->sync($request->segments);
@@ -96,15 +79,17 @@ EOD;
     public function update(Request $request, Page $page)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:pages,slug,' . $page->id,
-            'content' => 'required|string',
-            'equipment_id' => 'nullable|string|max:255',
+            'title'         => 'required|string|max:255',
+            'slug'          => 'required|string|max:255|unique:pages,slug,' . $page->id,
+            'content'       => 'required|string',
+            'equipment_id'  => 'nullable|string|max:255',
             'segments'      => 'nullable|array',
-            'segments.*'    => 'exists:segments,id',            
+            'segments.*'    => 'exists:segments,id',
+            'is_active'     => 'boolean',
+            'condition'     => 'in:novo,usado',            
         ]);
 
-        $page->update($request->only(['title', 'slug', 'content', 'equipament_id']));
+        $page->update($request->only(['title', 'slug', 'content', 'equipament_id','is_active','condition']));
 
         if ($request->has('segments')) {
             $page->segments()->sync($request->segments);

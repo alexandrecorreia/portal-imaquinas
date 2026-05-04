@@ -11,7 +11,9 @@ class Page extends Model
         'title',
         'slug',
         'content',
-        'equipament_id'
+        'equipament_id',
+        'is_active',
+        'condition'
     ];
 
     protected $casts = [

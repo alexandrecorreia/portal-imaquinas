@@ -21,8 +21,10 @@ return new class extends Migration
                     ->constrained('equipaments')
                     ->nullOnDelete();            
             
-            $table->boolean('is_active')->default(true); // <-- novo campo
+            $table->boolean('is_active')->default(true); 
             
+            $table->enum('condition', ['novo', 'usado'])->default('novo');
+
             $table->timestamps();
         });
     }
