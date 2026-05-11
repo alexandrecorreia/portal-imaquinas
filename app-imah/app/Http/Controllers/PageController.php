@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Equipament;
 use App\Models\Segment;
+use App\Models\Upload;
 use Illuminate\Http\Request;
 
 use Parsedown;
@@ -33,10 +34,21 @@ class PageController extends Controller
         $defaultTemplate = view('admin.pages.default-template')->render();
 
         $equipaments = Equipament::orderBy('name')->get();
-        
         $segments    = Segment::orderBy('name')->get();
-        
-        return view('admin.pages.create', compact('defaultTemplate', 'equipaments', 'segments'));
+
+        // Carregar arquivos existentes
+        $existingImages = Upload::where('type', 'image')->orderBy('created_at', 'desc')->get();
+        $existingVideos = Upload::where('type', 'video')->orderBy('created_at', 'desc')->get();
+        $existingPdfs   = Upload::where('type', 'pdf')->orderBy('created_at', 'desc')->get();
+
+        return view('admin.pages.create', compact(
+            'defaultTemplate', 
+            'equipaments', 
+            'segments',
+            'existingImages',
+            'existingVideos',
+            'existingPdfs'
+        ));        
     }
 
     public function store(Request $request)
@@ -128,18 +140,24 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        $totalPages = Page::count();
-        
-        // Contar arquivos nas pastas de uploads
-        $totalImages = count(glob(storage_path('app/public/uploads/imagem/*')));
-        $totalVideos = count(glob(storage_path('app/public/uploads/video/*')));
-        $totalPdfs = count(glob(storage_path('app/public/uploads/pdf/*')));
+        $totalPages      = Page::count();
         $totalEquipaments = Equipament::count();
-        $totalSegments = Segment::count();
-    
-        return view('admin.dashboard', 
-            compact('totalPages', 'totalImages', 'totalVideos', 'totalPdfs', 'totalEquipaments', 'totalSegments'));
-    }    
+        $totalSegments   = Segment::count();
+
+        // Contagem via Model Upload (novo sistema)
+        $totalImages = Upload::where('type', 'image')->count();
+        $totalVideos = Upload::where('type', 'video')->count();
+        $totalPdfs   = Upload::where('type', 'pdf')->count();
+
+        return view('admin.dashboard', compact(
+            'totalPages',
+            'totalImages',
+            'totalVideos',
+            'totalPdfs',
+            'totalEquipaments',
+            'totalSegments'
+        ));
+    }
 
     public function equipments()
     {

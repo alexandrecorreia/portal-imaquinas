@@ -1,6 +1,3 @@
-[images]: img1.jpg, img2.jpg, img3.jpg
-[video]: video.mp4
-[pdf]: catalogo.pdf
 
 # Descrição
 A **Maquina Ipsum** é o topo da impressão retrô-mod. Une estilo 50s com tech moderna: precisa, durável, ideal p/ tecidos, plásticos e metais.
