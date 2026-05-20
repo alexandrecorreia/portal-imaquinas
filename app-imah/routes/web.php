@@ -53,6 +53,9 @@ Route::get('/downloads', [DownloadController::class, 'index'])->name('downloads'
 // Rota pública para listar páginas por tipo de equipamento
 Route::get('/equipamentos', [PageController::class, 'equipments'])->name('equipamentos.index');
 
+// Primeira versão estática da página de produto no novo design
+Route::view('/produto', 'produto-estatico')->name('produto.estatico');
+
 // Rota de contato
 Route::get('/contato', function () {
     return view('contato');
