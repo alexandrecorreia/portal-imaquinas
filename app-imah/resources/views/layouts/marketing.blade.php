@@ -64,6 +64,22 @@
             backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         }
 
+        document.querySelectorAll('[data-scroll-controls]').forEach((controls) => {
+            const scroller = document.querySelector(controls.dataset.scrollControls);
+            if (!scroller) return;
+
+            controls.addEventListener('click', (event) => {
+                const button = event.target.closest('[data-scroll-direction]');
+                if (!button) return;
+
+                const direction = button.dataset.scrollDirection === 'prev' ? -1 : 1;
+                const card = scroller.firstElementChild;
+                const fallback = scroller.clientWidth * .8;
+                const distance = card ? card.getBoundingClientRect().width + 18 : fallback;
+                scroller.scrollBy({ left: direction * distance, behavior: 'smooth' });
+            });
+        });
+
         const counters = document.querySelectorAll('[data-count-to]');
         const countObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {

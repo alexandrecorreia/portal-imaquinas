@@ -249,11 +249,18 @@ address {
     border-radius: 999px;
     color: var(--ink);
     background: var(--teal);
+    transition: background .2s ease, transform .2s ease;
 }
 
 .whatsapp-float img {
     width: 27px;
     height: 27px;
+}
+
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+    background: #25d366;
+    transform: translateY(-2px);
 }
 
 .back-top {
@@ -397,9 +404,7 @@ address {
     z-index: 1;
     display: flex;
     min-width: max-content;
-    animation: marquee-scroll linear both;
-    animation-timeline: view();
-    animation-range: entry 0% exit 100%;
+    animation: marquee-scroll 22s linear infinite;
 }
 
 .marquee-track span {
@@ -411,8 +416,8 @@ address {
 }
 
 @keyframes marquee-scroll {
-    from { transform: translateX(12vw); }
-    to { transform: translateX(-42vw); }
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
 
 .stats-row {
@@ -836,7 +841,7 @@ details li::marker {
     display: flex;
     align-items: flex-end;
     overflow: hidden;
-    border-radius: 0 0 4px 4px;
+    border-radius: 18px;
     color: var(--white);
     background: #111;
 }
@@ -913,6 +918,7 @@ details li::marker {
     overflow-x: auto;
     border-left: 1px solid #c9ccd1;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 .segment-card {
@@ -937,7 +943,7 @@ details li::marker {
     margin: 0;
     color: #30343a;
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 600;
     line-height: 1.15;
 }
 
@@ -1051,6 +1057,7 @@ details li::marker {
     overflow-x: auto;
     padding-bottom: 8px;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 .application-card {
@@ -1088,6 +1095,7 @@ details li::marker {
 
     .quote-link {
         order: 4;
+        max-width: 132px;
     }
 
     .main-nav {

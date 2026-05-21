@@ -60,9 +60,9 @@
             @endforeach
         </div>
         <div class="container section-link-row">
-            <div class="section-controls" aria-hidden="true">
-                <button type="button">‹</button>
-                <button type="button">›</button>
+            <div class="section-controls" data-scroll-controls=".segment-scroller">
+                <button type="button" data-scroll-direction="prev" aria-label="Segmentos anteriores">‹</button>
+                <button type="button" data-scroll-direction="next" aria-label="Próximos segmentos">›</button>
             </div>
             <a href="{{ url('/equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
         </div>
@@ -127,9 +127,9 @@
                 @endforeach
             </div>
             <div class="section-link-row">
-                <div class="section-controls" aria-hidden="true">
-                    <button type="button">‹</button>
-                    <button type="button">›</button>
+                <div class="section-controls" data-scroll-controls=".application-scroller">
+                    <button type="button" data-scroll-direction="prev" aria-label="Aplicações anteriores">‹</button>
+                    <button type="button" data-scroll-direction="next" aria-label="Próximas aplicações">›</button>
                 </div>
                 <a href="{{ url('/equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
             </div>
