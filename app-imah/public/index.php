@@ -3,8 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
-echo "oi";
-die();
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
 define('LARAVEL_START', microtime(true));
 
