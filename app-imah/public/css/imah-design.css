@@ -1124,6 +1124,20 @@ details li::marker {
     /* border-radius: 6px; */
 }
 
+.product-hero--olympic .product-carousel-slide {
+    padding: clamp(18px, 4vw, 54px);
+    background: #edf3f3;
+}
+
+.product-hero--olympic .product-carousel-slide img {
+    object-fit: contain;
+    background: #edf3f3;
+}
+
+.product-hero--olympic .product-card {
+    border-top: 5px solid var(--teal);
+}
+
 .product-carousel-slide:first-child img {
     /* object-fit: contain; */
     padding: clamp(34px, 6vw, 110px);

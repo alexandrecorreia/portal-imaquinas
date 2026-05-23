@@ -55,6 +55,7 @@ Route::get('/equipamentos', [PageController::class, 'equipments'])->name('equipa
 
 // Primeira versão estática da página de produto no novo design
 Route::view('/produto', 'produto-estatico')->name('produto.estatico');
+Route::view('/produto-2', 'produto-olympic-olg')->name('produto.olympic-olg');
 Route::view('/solucoes-e-equipamentos', 'solucoes-e-equipamentos')->name('solucoes-e-equipamentos');
 Route::view('/projetos-especiais', 'projetos-especiais')->name('projetos-especiais');
 Route::view('/sobre', 'sobre')->name('sobre');
