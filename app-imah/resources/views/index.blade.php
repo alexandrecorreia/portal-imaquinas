@@ -38,7 +38,20 @@
 @section('content')
     <section class="home-hero" aria-labelledby="home-title">
         <div class="home-hero-frame">
-            <img src="{{ asset('img/video01.png') }}" alt="Linha industrial de produção IMAH">
+            <video
+                class="home-hero-media"
+                poster="{{ asset('img/video01.png') }}"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Linha industrial de produção IMAH"
+                data-video-src="{{ asset('video/homepage-header-video-optimized.mp4') }}"
+            ></video>
+            <button class="home-hero-video-toggle" type="button" aria-label="Reproduzir vídeo" data-home-hero-video-toggle>
+                <span class="home-hero-video-toggle__play" aria-hidden="true"></span>
+                <span class="home-hero-video-toggle__pause" aria-hidden="true"></span>
+            </button>
             <div class="home-hero-content">
                 <h1 id="home-title">Tecnologia em Serigrafia que dura gerações.</h1>
                 <div class="home-hero-copy">
@@ -137,4 +150,64 @@
     </section>
 
     @include('partials.marketing.cta')
+@endsection
+
+@section('scripts')
+    <script>
+        (() => {
+            const video = document.querySelector('.home-hero-media');
+            const toggle = document.querySelector('[data-home-hero-video-toggle]');
+            if (!video || !toggle) return;
+
+            const canAutoplay = window.matchMedia('(min-width: 769px)').matches
+                && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            const setPlayingState = (isPlaying) => {
+                toggle.classList.toggle('is-playing', isPlaying);
+                toggle.setAttribute('aria-label', isPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo');
+            };
+
+            const loadVideo = () => {
+                if (video.querySelector('source')) return;
+
+                const source = document.createElement('source');
+                source.src = video.dataset.videoSrc;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.load();
+            };
+
+            const unloadVideo = () => {
+                video.pause();
+                video.removeAttribute('src');
+                video.querySelectorAll('source').forEach((source) => source.remove());
+                video.load();
+                setPlayingState(false);
+            };
+
+            const playVideo = async () => {
+                loadVideo();
+
+                try {
+                    await video.play();
+                    setPlayingState(true);
+                } catch (error) {
+                    setPlayingState(false);
+                }
+            };
+
+            toggle.addEventListener('click', () => {
+                if (toggle.classList.contains('is-playing')) {
+                    unloadVideo();
+                    return;
+                }
+
+                playVideo();
+            });
+
+            window.addEventListener('load', () => {
+                if (canAutoplay) playVideo();
+            }, { once: true });
+        })();
+    </script>
 @endsection
