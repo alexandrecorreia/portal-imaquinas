@@ -5,13 +5,13 @@
 
 @php
     $segments = [
-        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg')],
-        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg')],
-        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg')],
-        ['title' => 'Vidros & Automotivo', 'icon' => asset('img/Vidros &  Automotivo.svg')],
-        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg')],
-        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg')],
-        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg')],
+        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
+        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
+        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
+        ['title' => 'Vidros & Automotivo', 'icon' => asset('img/Vidros &  Automotivo.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=vidro')],
+        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
+        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
+        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
     ];
 
     $machines = array_fill(0, 6, [
@@ -56,7 +56,7 @@
                 <h1 id="home-title">Tecnologia em Serigrafia que dura gerações.</h1>
                 <div class="home-hero-copy">
                     <p>We empower organizations across industries to unlock digital opportunities through strategy, consulting.</p>
-                    <a class="btn-imah btn-imah--primary" href="{{ url('/equipamentos') }}">Encontre sua solução <span aria-hidden="true">↗</span></a>
+                    <a class="btn-imah btn-imah--primary" href="{{ url('/solucoes-e-equipamentos') }}">Encontre sua solução <span aria-hidden="true">↗</span></a>
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
                 <button type="button" data-scroll-direction="prev" aria-label="Segmentos anteriores">‹</button>
                 <button type="button" data-scroll-direction="next" aria-label="Próximos segmentos">›</button>
             </div>
-            <a href="{{ url('/equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
+            <a href="{{ url('/solucoes-e-equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
         </div>
     </section>
 
@@ -89,7 +89,7 @@
                     @include('partials.marketing.product-card', $machine)
                 @endforeach
             </div>
-            <a class="all-products" href="{{ url('/equipamentos') }}">Conheça todas as máquinas <span aria-hidden="true">↗</span></a>
+            <a class="all-products" href="{{ url('/solucoes-e-equipamentos') }}">Conheça todas as máquinas <span aria-hidden="true">↗</span></a>
         </div>
     </section>
 
@@ -144,7 +144,7 @@
                     <button type="button" data-scroll-direction="prev" aria-label="Aplicações anteriores">‹</button>
                     <button type="button" data-scroll-direction="next" aria-label="Próximas aplicações">›</button>
                 </div>
-                <a href="{{ url('/equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
+                <a href="{{ url('/solucoes-e-equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
             </div>
         </div>
     </section>

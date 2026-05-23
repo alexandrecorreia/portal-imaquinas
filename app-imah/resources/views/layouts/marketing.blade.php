@@ -25,11 +25,11 @@
             <span></span><span></span><span></span>
         </button>
         <nav class="main-nav" id="main-menu" aria-label="Navegação principal">
-            <a href="{{ url('/equipamentos') }}">Soluções</a>
-            <a href="{{ url('/equipamentos') }}">Equipamentos</a>
-            <a href="#">Máquinas Usadas</a>
-            <a href="#">Projetos Especiais</a>
-            <a href="{{ url('/') }}#sobre">A Imah</a>
+            <a href="{{ url('/solucoes-e-equipamentos') }}">Soluções</a>
+            <a href="{{ url('/solucoes-e-equipamentos') }}">Equipamentos</a>
+            <a href="{{ url('/seminovos') }}">Seminovos</a>
+            <a href="{{ url('/projetos-especiais') }}">Projetos Especiais</a>
+            <a href="{{ url('/sobre') }}">A Imah</a>
         </nav>
         <a class="btn-imah btn-imah--primary quote-link" href="{{ url('/contato') }}">Orçamento <span aria-hidden="true">↗</span></a>
     </header>
@@ -44,6 +44,13 @@
         <img src="{{ asset('img/whatsapp.svg') }}" alt="">
     </a>
     <button class="back-top" type="button" aria-label="Voltar ao topo">↑</button>
+    <aside class="cookie-notice" data-cookie-notice hidden>
+        <p>Usamos cookies para melhorar sua experiencia e manter recursos essenciais do site.</p>
+        <div>
+            <a href="{{ url('/politica-de-cookies') }}">Configurar</a>
+            <button type="button" data-cookie-accept>Aceitar</button>
+        </div>
+    </aside>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
@@ -102,6 +109,18 @@
             });
         }, { threshold: 0.35 });
         counters.forEach((counter) => countObserver.observe(counter));
+
+        const cookieNotice = document.querySelector('[data-cookie-notice]');
+        const cookieAccept = document.querySelector('[data-cookie-accept]');
+        if (cookieNotice && !localStorage.getItem('imah_cookie_notice_ok')) {
+            cookieNotice.hidden = false;
+        }
+        if (cookieAccept) {
+            cookieAccept.addEventListener('click', () => {
+                localStorage.setItem('imah_cookie_notice_ok', 'true');
+                cookieNotice.hidden = true;
+            });
+        }
     </script>
     @yield('scripts')
 </body>

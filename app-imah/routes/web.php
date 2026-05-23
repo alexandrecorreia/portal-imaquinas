@@ -55,6 +55,14 @@ Route::get('/equipamentos', [PageController::class, 'equipments'])->name('equipa
 
 // Primeira versão estática da página de produto no novo design
 Route::view('/produto', 'produto-estatico')->name('produto.estatico');
+Route::view('/solucoes-e-equipamentos', 'solucoes-e-equipamentos')->name('solucoes-e-equipamentos');
+Route::view('/projetos-especiais', 'projetos-especiais')->name('projetos-especiais');
+Route::view('/sobre', 'sobre')->name('sobre');
+Route::view('/seminovos', 'seminovos')->name('seminovos');
+Route::view('/seminovos/produto', 'seminovos-produto')->name('seminovos.produto');
+Route::view('/politica-de-privacidade', 'legal.privacidade')->name('legal.privacidade');
+Route::view('/politica-de-cookies', 'legal.cookies')->name('legal.cookies');
+Route::view('/termos-de-uso', 'legal.termos')->name('legal.termos');
 
 // Rota de contato
 Route::get('/contato', function () {

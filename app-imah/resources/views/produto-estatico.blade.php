@@ -4,22 +4,31 @@
 @section('meta_description', 'Impressora INDEC CM da IMAH: produtividade, precisão e repetibilidade para produção serigráfica industrial.')
 @section('og_image', asset('img/prod-impressora-index-cm01.png'))
 
+@php
+    $heroImages = [
+        ['src' => asset('img/prod-impressora-index-cm01.png'), 'alt' => 'Impressora INDEC CM'],
+        ['src' => asset('img/prod-impressora-index-cm02.png'), 'alt' => 'Detalhe tecnico da impressora INDEC CM'],
+        ['src' => asset('img/worker.jpg'), 'alt' => 'Aplicacao tecnica em acabamento industrial'],
+    ];
+@endphp
+
 @section('content')
-    <section class="product-hero" aria-labelledby="product-title">
-        <div class="hero-gallery" aria-label="Galeria do produto">
-            <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Imagem anterior">‹</button>
-            <div class="product-main-image">
-                <img src="{{ asset('img/prod-impressora-index-cm01.png') }}" alt="Impressora INDEC CM">
+    <section class="product-hero product-hero--carousel" aria-labelledby="product-title" data-product-carousel>
+        <div class="hero-gallery hero-gallery--wide" aria-label="Galeria do produto">
+            <div class="product-carousel-track" data-product-track>
+                @foreach ($heroImages as $image)
+                    <figure class="product-carousel-slide">
+                        <img src="{{ $image['src'] }}" alt="{{ $image['alt'] }}">
+                    </figure>
+                @endforeach
             </div>
-            <button class="hero-arrow hero-arrow--next" type="button" aria-label="Próxima imagem">›</button>
-            <button class="zoom-button" type="button" aria-label="Ampliar imagem">+</button>
+            <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Imagem anterior" data-product-prev>‹</button>
+            <button class="hero-arrow hero-arrow--next" type="button" aria-label="Proxima imagem" data-product-next>›</button>
+            <button class="zoom-button" type="button" aria-label="Ampliar imagem" data-product-zoom>+</button>
         </div>
 
-        <div class="hero-detail">
-            <div class="hero-photo hero-photo--top">
-                <img src="{{ asset('img/prod-impressora-index-cm02.png') }}" alt="Detalhe de máquina serigráfica em operação">
-            </div>
-            <article class="product-card">
+        <div class="hero-detail hero-detail--overlay">
+            <article class="product-card product-card--floating">
                 <div class="eyebrows">
                     <span>IMH CM</span>
                     <span>Tecn. Cadpress</span>
@@ -32,11 +41,13 @@
                     <a href="{{ url('/contato') }}">Comprar agora <span aria-hidden="true">↗</span></a>
                 </div>
             </article>
-            <div class="hero-photo hero-photo--bottom">
-                <img src="{{ asset('img/prod-impressora-index-cm04.png') }}" alt="Conjunto mecânico de equipamento IMAH">
-            </div>
         </div>
     </section>
+
+    <dialog class="image-modal" data-product-modal aria-label="Imagem ampliada">
+        <button type="button" data-product-modal-close aria-label="Fechar imagem ampliada">×</button>
+        <img src="{{ $heroImages[0]['src'] }}" alt="{{ $heroImages[0]['alt'] }}" data-product-modal-image>
+    </dialog>
 
     <nav class="anchor-nav container" aria-label="Seções do produto">
         <a href="#descricao">Descrição <span aria-hidden="true">↗</span></a>
@@ -160,9 +171,51 @@
                     ])
                 @endforeach
             </div>
-            <a class="all-products" href="{{ url('/equipamentos') }}">Conheça todas as máquinas <span aria-hidden="true">↗</span></a>
+            <a class="all-products" href="{{ url('/solucoes-e-equipamentos') }}">Conheça todas as máquinas <span aria-hidden="true">↗</span></a>
         </div>
     </section>
 
     @include('partials.marketing.cta')
+@endsection
+
+@section('scripts')
+    <script>
+        (() => {
+            const carousel = document.querySelector('[data-product-carousel]');
+            if (!carousel) return;
+
+            const track = carousel.querySelector('[data-product-track]');
+            const slides = Array.from(track.children);
+            const modal = document.querySelector('[data-product-modal]');
+            const modalImage = document.querySelector('[data-product-modal-image]');
+            let index = 0;
+            const maxIndex = Math.max(slides.length - 2, 0);
+
+            const update = () => {
+                track.style.transform = `translateX(${-index * 50}%)`;
+            };
+
+            carousel.querySelector('[data-product-prev]').addEventListener('click', () => {
+                index = index === 0 ? maxIndex : index - 1;
+                update();
+            });
+
+            carousel.querySelector('[data-product-next]').addEventListener('click', () => {
+                index = index === maxIndex ? 0 : index + 1;
+                update();
+            });
+
+            carousel.querySelector('[data-product-zoom]').addEventListener('click', () => {
+                const image = slides[index].querySelector('img');
+                modalImage.src = image.src;
+                modalImage.alt = image.alt;
+                modal.showModal();
+            });
+
+            document.querySelector('[data-product-modal-close]').addEventListener('click', () => modal.close());
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) modal.close();
+            });
+        })();
+    </script>
 @endsection
