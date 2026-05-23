@@ -1,22 +1,22 @@
-<form class="catalog-filters" action="{{ $action ?? url('/solucoes-e-equipamentos') }}" method="get" aria-label="Filtros de catalogo">
+<form class="catalog-filters" action="{{ $action ?? url('/solucoes-e-equipamentos') }}" method="get" aria-label="Filtros de catálogo">
     <label>
         <span>Qual seu segmento?</span>
         <select name="segmento">
             <option value="">Qual seu segmento?</option>
-            <option value="grafico">Grafico & Promocional</option>
-            <option value="textil">Textil & Calcados</option>
+            <option value="grafico">Gráfico & Promocional</option>
+            <option value="textil">Têxtil & Calçados</option>
             <option value="vidro">Vidros & Automotivo</option>
-            <option value="industria">Industria & Tecnico</option>
+            <option value="industria">Indústria & Técnico</option>
         </select>
     </label>
     <label>
-        <span>O que voce produz?</span>
+        <span>O que você produz?</span>
         <select name="aplicacao">
-            <option value="">O que voce produz?</option>
+            <option value="">O que você produz?</option>
             <option value="brindes">Brindes</option>
             <option value="teclados">Teclados de membrana</option>
-            <option value="calçados">Calcados</option>
-            <option value="placas">Placas tecnicas</option>
+            <option value="calçados">Calçados</option>
+            <option value="placas">Placas técnicas</option>
         </select>
     </label>
     <label>
@@ -26,7 +26,7 @@
             <option value="impressora">Impressora</option>
             <option value="envernizadora">Envernizadora</option>
             <option value="secagem">Secagem</option>
-            <option value="acessorio">Acessorio</option>
+            <option value="acessorio">Acessório</option>
         </select>
     </label>
 </form>

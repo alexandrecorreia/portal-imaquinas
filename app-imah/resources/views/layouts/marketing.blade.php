@@ -45,7 +45,7 @@
     </a>
     <button class="back-top" type="button" aria-label="Voltar ao topo">↑</button>
     <aside class="cookie-notice" data-cookie-notice hidden>
-        <p>Usamos cookies para melhorar sua experiencia e manter recursos essenciais do site.</p>
+        <p>Usamos cookies para melhorar sua experiência e manter recursos essenciais do site.</p>
         <div>
             <a href="{{ url('/politica-de-cookies') }}">Configurar</a>
             <button type="button" data-cookie-accept>Aceitar</button>

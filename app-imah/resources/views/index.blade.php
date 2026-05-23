@@ -5,13 +5,13 @@
 
 @php
     $segments = [
-        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
-        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
-        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
-        ['title' => 'Vidros & Automotivo', 'icon' => asset('img/Vidros &  Automotivo.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=vidro')],
-        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
-        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
-        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
+        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'image' => asset('img/Gráfico & Promocional.png'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
+        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'image' => asset('img/Têxtil & Calçadista.png'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
+        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'image' => asset('img/Indústria & Técnico.png'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
+        ['title' => 'Vidros & Automotivo', 'icon' => asset('img/Vidros &  Automotivo.svg'), 'image' => asset('img/Vidros &  Automotivo.png'), 'href' => url('/solucoes-e-equipamentos?segmento=vidro')],
+        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'image' => asset('img/Gráfico & Promocional.png'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
+        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'image' => asset('img/Têxtil & Calçadista.png'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
+        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'image' => asset('img/Indústria & Técnico.png'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
     ];
 
     $machines = array_fill(0, 6, [

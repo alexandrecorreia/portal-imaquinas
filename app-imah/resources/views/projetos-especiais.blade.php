@@ -7,7 +7,7 @@
     $projectCards = array_fill(0, 6, [
         'title' => 'Double Action Actuator',
         'image' => asset('img/worker.jpg'),
-        'description' => 'Projeto sob medida para aplicacoes industriais com requisitos tecnicos especificos.',
+        'description' => 'Projeto sob medida para aplicações industriais com requisitos técnicos especificos.',
     ]);
 @endphp
 
@@ -17,12 +17,12 @@
             <h1>Engenharia dedicada à sua necessidade.</h1>
             <p>Lorem ipsum dolor sit amet consectetur. Lacus ut volutpat ultrices dignissim donec. Leo sit vel amet vulputate nunc facilisis.</p>
         </div>
-        <img src="{{ asset('img/fundo-maquina-desenho.jpg') }}" alt="Projeto industrial sob medida">
+        <img src="{{ asset('img/fundo-máquina-desenho.jpg') }}" alt="Projeto industrial sob medida">
     </section>
 
     <section class="special-callout">
         <p>Chain Lub Off-Road is a high-performance adhesive grease, resistant to water, mud and gravel. Its exclusive formula guarantees prolonged lubrication and protection against corrosion, increasing the durability of chains, cables, pedals, bearings and parts.</p>
-        <a class="dark-button" href="{{ url('/downloads') }}">Baixar catalogo <span aria-hidden="true">↗</span></a>
+        <a class="dark-button" href="{{ url('/downloads') }}">Baixar catálogo <span aria-hidden="true">↗</span></a>
     </section>
 
     <section class="process-section container">
@@ -49,7 +49,7 @@
     <section class="quality-section special-quality">
         <div class="container quality-showcase">
             <div class="quality-grid">
-                <img src="{{ asset('img/prod-impressora-index-cm02.png') }}" alt="Detalhe tecnico de maquina IMAH">
+                <img src="{{ asset('img/prod-impressora-index-cm02.png') }}" alt="Detalhe técnico de máquina IMAH">
                 <article class="quality-card">
                     <h2>Por que uma <span>Imah dura muitos anos?</span></h2>
                     <p>Lorem ipsum dolor sit amet consectetur. Lacus ut volutpat ultrices dignissim donec. Leo sit vel amet vulputate nunc facilisis.</p>

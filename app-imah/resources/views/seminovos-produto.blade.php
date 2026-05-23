@@ -1,14 +1,14 @@
 @extends('layouts.marketing')
 
 @section('title', 'Seminovo INDEC CM - IMAH')
-@section('meta_description', 'Equipamento seminovo INDEC CM revisado pela IMAH, com dados comerciais mockados para validacao do template.')
+@section('meta_description', 'Equipamento seminovo INDEC CM revisado pela IMAH, com dados comerciais mockados para validação do template.')
 @section('og_image', asset('img/prod-impressora-index-cm01.png'))
 
 @php
     $heroImages = [
         ['src' => asset('img/prod-impressora-index-cm01.png'), 'alt' => 'Impressora INDEC CM seminova'],
-        ['src' => asset('img/prod-impressora-index-cm02.png'), 'alt' => 'Detalhe tecnico do equipamento seminovo'],
-        ['src' => asset('img/prod-impressora-index-cm04.png'), 'alt' => 'Conjunto mecanico revisado'],
+        ['src' => asset('img/prod-impressora-index-cm02.png'), 'alt' => 'Detalhe técnico do equipamento seminovo'],
+        ['src' => asset('img/prod-impressora-index-cm04.png'), 'alt' => 'Conjunto mecânico revisado'],
     ];
 @endphp
 
@@ -23,7 +23,7 @@
                 @endforeach
             </div>
             <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Imagem anterior" data-product-prev>‹</button>
-            <button class="hero-arrow hero-arrow--next" type="button" aria-label="Proxima imagem" data-product-next>›</button>
+            <button class="hero-arrow hero-arrow--next" type="button" aria-label="Próxima imagem" data-product-next>›</button>
             <button class="zoom-button" type="button" aria-label="Ampliar imagem" data-product-zoom>+</button>
         </div>
 
@@ -35,12 +35,12 @@
                 </div>
                 <p class="category">seminovo</p>
                 <h1 id="product-title">INDEC CM</h1>
-                <p>Equipamento revisado pela equipe IMAH para operacao imediata, com estrutura robusta, componentes verificados e excelente custo-beneficio para ampliar sua producao.</p>
+                <p>Equipamento revisado pela equipe IMAH para operação imediata, com estrutura robusta, componentes verificados e excelente custo-benefício para ampliar sua produção.</p>
 
-                {{-- SEMINOVOS META: remover este bloco se o backend nao fornecer esses dados --}}
+                {{-- SEMINOVOS META: remover este bloco se o backend não fornecer esses dados --}}
                 <dl class="used-product-meta">
                     <div>
-                        <dt>Preco</dt>
+                        <dt>Preço</dt>
                         <dd>R$ 148.000,00</dd>
                     </div>
                     <div>
@@ -80,7 +80,7 @@
     <section class="intro-band" id="descricao">
         <div class="container">
             <div class="intro-copy">
-                <p>Uma oportunidade para adquirir tecnologia IMAH com entrega mais rapida, suporte tecnico e historico de revisao documentado.</p>
+                <p>Uma oportunidade para adquirir tecnologia IMAH com entrega mais rápida, suporte técnico e histórico de revisão documentado.</p>
                 <a class="dark-button" href="{{ url('/contato') }}">Reservar equipamento <span aria-hidden="true">↗</span></a>
             </div>
 
@@ -90,16 +90,16 @@
                 <p>Dados mockados para validar o modelo visual. A disponibilidade real deve ser confirmada pelo time comercial.</p>
                 <dl>
                     <div>
-                        <dt>Revisao tecnica</dt>
-                        <dd>Checklist mecanico, eletrico e pneumatico antes da entrega.</dd>
+                        <dt>Revisão técnica</dt>
+                        <dd>Checklist mecânico, elétrico e pneumático antes da entrega.</dd>
                     </div>
                     <div>
                         <dt>Treinamento</dt>
-                        <dd>Orientacao operacional inicial conforme escopo comercial.</dd>
+                        <dd>Orientação operacional inicial conforme escopo comercial.</dd>
                     </div>
                     <div>
                         <dt>Entrega</dt>
-                        <dd>Disponibilidade imediata apos confirmacao de compra e logistica.</dd>
+                        <dd>Disponibilidade imediata após confirmação de compra e logística.</dd>
                     </div>
                 </dl>
             </div>
@@ -110,18 +110,18 @@
         <div class="container">
             <h2>Especificações</h2>
             <details open>
-                <summary>Ficha Tecnica</summary>
+                <summary>Ficha Técnica</summary>
                 <ul>
-                    <li>Area util de impressao: 35 x 50 cm</li>
-                    <li>Dimensoes maximas da matriz: 50 x 70 cm</li>
-                    <li>Produtividade maxima: 1.000 IPH</li>
+                    <li>Área útil de impressão: 35 x 50 cm</li>
+                    <li>Dimensões máximas da matriz: 50 x 70 cm</li>
+                    <li>Produtividade máxima: 1.000 IPH</li>
                 </ul>
             </details>
             <details id="condicoes" open>
-                <summary>Observacoes comerciais</summary>
+                <summary>Observações comerciais</summary>
                 <ul>
-                    <li>Preco, disponibilidade e estado sao dados demonstrativos.</li>
-                    <li>A compra depende de vistoria final e confirmacao comercial.</li>
+                    <li>Preço, disponibilidade e estado são dados demonstrativos.</li>
+                    <li>A compra depende de vistoria final e confirmação comercial.</li>
                 </ul>
             </details>
         </div>
@@ -137,28 +137,44 @@
             if (!carousel) return;
 
             const track = carousel.querySelector('[data-product-track]');
-            const slides = Array.from(track.children);
             const modal = document.querySelector('[data-product-modal]');
             const modalImage = document.querySelector('[data-product-modal-image]');
-            let index = 0;
-            const maxIndex = Math.max(slides.length - 2, 0);
+            let isAnimating = false;
 
-            const update = () => {
-                track.style.transform = `translateX(${-index * 50}%)`;
+            const resetTrack = () => {
+                track.classList.remove('is-sliding');
+                track.style.transform = 'translateX(0)';
             };
 
             carousel.querySelector('[data-product-prev]').addEventListener('click', () => {
-                index = index === 0 ? maxIndex : index - 1;
-                update();
+                if (isAnimating) return;
+                isAnimating = true;
+                track.classList.remove('is-sliding');
+                track.insertBefore(track.lastElementChild, track.firstElementChild);
+                track.style.transform = 'translateX(-50%)';
+                requestAnimationFrame(() => {
+                    track.classList.add('is-sliding');
+                    track.style.transform = 'translateX(0)';
+                });
             });
 
             carousel.querySelector('[data-product-next]').addEventListener('click', () => {
-                index = index === maxIndex ? 0 : index + 1;
-                update();
+                if (isAnimating) return;
+                isAnimating = true;
+                track.classList.add('is-sliding');
+                track.style.transform = 'translateX(-50%)';
+            });
+
+            track.addEventListener('transitionend', () => {
+                if (track.style.transform === 'translateX(-50%)') {
+                    track.appendChild(track.firstElementChild);
+                }
+                resetTrack();
+                isAnimating = false;
             });
 
             carousel.querySelector('[data-product-zoom]').addEventListener('click', () => {
-                const image = slides[index].querySelector('img');
+                const image = track.firstElementChild.querySelector('img');
                 modalImage.src = image.src;
                 modalImage.alt = image.alt;
                 modal.showModal();

@@ -1,7 +1,7 @@
 @extends('layouts.marketing')
 
 @section('title', 'Sobre a IMAH')
-@section('meta_description', 'Conheca a trajetoria da IMAH Industria de Maquinas e sua tecnologia nacional.')
+@section('meta_description', 'Conheca a trajetória da IMAH Indústria de Máquinas e sua tecnologia nacional.')
 
 @section('content')
     <section class="about-hero">
@@ -15,8 +15,8 @@
     <section class="trajectory-section container">
         <div class="video-profile">
             <img src="{{ asset('img/sobre-imah.jpg') }}" alt="Representante IMAH">
-            <button type="button" aria-label="Video institucional indisponivel no momento">
-                <span aria-hidden="true">▶</span> Assistir o Video
+            <button type="button" aria-label="Vídeo institucional indisponível no momento">
+                <span aria-hidden="true">▶</span> Assistir o Vídeo
             </button>
             <strong>Harry Vogt</strong>
             <small>CEO & Founder</small>

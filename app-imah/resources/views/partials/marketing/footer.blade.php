@@ -43,7 +43,7 @@
         </section>
     </div>
     <div class="footer-bottom">
-        <span>IMAH Industria de Maquinas © 2026 - Todos os direitos reservados</span>
+        <span>IMAH Indústria de Máquinas © 2026 - Todos os direitos reservados</span>
         <nav aria-label="Links legais">
             <a href="{{ url('/politica-de-privacidade') }}">Política de Privacidade</a>
             <a href="{{ url('/politica-de-cookies') }}">Política de Cookies</a>

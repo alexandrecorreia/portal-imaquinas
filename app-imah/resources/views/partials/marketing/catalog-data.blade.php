@@ -4,6 +4,6 @@
         'image' => asset('img/produtos-relacionados01.png'),
         'code' => 'NT10-105',
         'href' => url('/produto'),
-        'description' => 'Desenvolvida especificamente para a impressao serigrafica de alta qualidade onde os controles do processo devem ser monitorados.',
+        'description' => 'Desenvolvida especificamente para a impressão serigráfica de alta qualidade onde os controles do processo devem ser monitorados.',
     ]);
 @endphp

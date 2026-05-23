@@ -1,6 +1,6 @@
 <section class="legal-page">
     <div class="container">
-        <p class="legal-kicker">IMAH Industria de Maquinas</p>
+        <p class="legal-kicker">IMAH Indústria de Máquinas</p>
         <h1>{{ $title }}</h1>
         <p class="legal-intro">{{ $intro }}</p>
 

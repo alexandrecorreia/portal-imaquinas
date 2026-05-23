@@ -4,5 +4,6 @@
         <span>{{ $code ?? 'NTHO-105' }}</span>
         <h3>{{ $title ?? 'Impressora INDEC CM' }}</h3>
         <p>{{ $description ?? 'Desenvolvida especificamente para a impressão serigráfica de alta qualidade onde os controles do processo devem ser monitorados.' }}</p>
+        <strong>Conheça o produto <span aria-hidden="true">↗</span></strong>
     </a>
 </article>

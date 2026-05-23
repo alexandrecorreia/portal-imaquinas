@@ -7,8 +7,8 @@
 @php
     $heroImages = [
         ['src' => asset('img/prod-impressora-index-cm01.png'), 'alt' => 'Impressora INDEC CM'],
-        ['src' => asset('img/prod-impressora-index-cm02.png'), 'alt' => 'Detalhe tecnico da impressora INDEC CM'],
-        ['src' => asset('img/worker.jpg'), 'alt' => 'Aplicacao tecnica em acabamento industrial'],
+        ['src' => asset('img/prod-impressora-index-cm02.png'), 'alt' => 'Detalhe técnico da impressora INDEC CM'],
+        ['src' => asset('img/worker.jpg'), 'alt' => 'Aplicação técnica em acabamento industrial'],
     ];
 @endphp
 
@@ -23,7 +23,7 @@
                 @endforeach
             </div>
             <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Imagem anterior" data-product-prev>‹</button>
-            <button class="hero-arrow hero-arrow--next" type="button" aria-label="Proxima imagem" data-product-next>›</button>
+            <button class="hero-arrow hero-arrow--next" type="button" aria-label="Próxima imagem" data-product-next>›</button>
             <button class="zoom-button" type="button" aria-label="Ampliar imagem" data-product-zoom>+</button>
         </div>
 
@@ -68,7 +68,7 @@
                 <p>Um equipamento confiável, com mais de 15 anos de vida útil e qualidade comprovada para aplicações técnicas exigentes.</p>
                 <dl>
                     <div>
-                        <dt>Tecl. Calcados & Transfers</dt>
+                        <dt>Tecl. Calçados & Transfers</dt>
                         <dd>Calçados, transfers sublimáticos e posicionamento preciso para etiquetas e tags.</dd>
                     </div>
                     <div>
@@ -88,11 +88,19 @@
         </div>
     </section>
 
-    <section class="video-band" aria-label="Vídeo institucional">
-        <img src="{{ asset('img/logo-imah02.svg') }}" alt="IMAH Indústria de Máquinas">
-        <a class="play-button" href="{{ asset('video/loja-imah.mp4') }}" target="_blank" rel="noopener">
+    <section class="video-band video-band--product" aria-label="Vídeo do produto">
+        <video
+            class="product-video"
+            poster="{{ asset('img/prod-impressora-index-cm02.png') }}"
+            playsinline
+            controls
+            preload="none"
+            data-product-video
+            data-video-src="{{ asset('video/index_cm_2-optimized.mp4') }}"
+        ></video>
+        <button class="play-button" type="button" data-product-video-play>
             <span aria-hidden="true">▶</span> Assistir o Vídeo
-        </a>
+        </button>
     </section>
 
     <section class="features-section" id="diferenciais">
@@ -185,28 +193,44 @@
             if (!carousel) return;
 
             const track = carousel.querySelector('[data-product-track]');
-            const slides = Array.from(track.children);
             const modal = document.querySelector('[data-product-modal]');
             const modalImage = document.querySelector('[data-product-modal-image]');
-            let index = 0;
-            const maxIndex = Math.max(slides.length - 2, 0);
+            let isAnimating = false;
 
-            const update = () => {
-                track.style.transform = `translateX(${-index * 50}%)`;
+            const resetTrack = () => {
+                track.classList.remove('is-sliding');
+                track.style.transform = 'translateX(0)';
             };
 
             carousel.querySelector('[data-product-prev]').addEventListener('click', () => {
-                index = index === 0 ? maxIndex : index - 1;
-                update();
+                if (isAnimating) return;
+                isAnimating = true;
+                track.classList.remove('is-sliding');
+                track.insertBefore(track.lastElementChild, track.firstElementChild);
+                track.style.transform = 'translateX(-50%)';
+                requestAnimationFrame(() => {
+                    track.classList.add('is-sliding');
+                    track.style.transform = 'translateX(0)';
+                });
             });
 
             carousel.querySelector('[data-product-next]').addEventListener('click', () => {
-                index = index === maxIndex ? 0 : index + 1;
-                update();
+                if (isAnimating) return;
+                isAnimating = true;
+                track.classList.add('is-sliding');
+                track.style.transform = 'translateX(-50%)';
+            });
+
+            track.addEventListener('transitionend', () => {
+                if (track.style.transform === 'translateX(-50%)') {
+                    track.appendChild(track.firstElementChild);
+                }
+                resetTrack();
+                isAnimating = false;
             });
 
             carousel.querySelector('[data-product-zoom]').addEventListener('click', () => {
-                const image = slides[index].querySelector('img');
+                const image = track.firstElementChild.querySelector('img');
                 modalImage.src = image.src;
                 modalImage.alt = image.alt;
                 modal.showModal();
@@ -216,6 +240,29 @@
             modal.addEventListener('click', (event) => {
                 if (event.target === modal) modal.close();
             });
+
+            const productVideo = document.querySelector('[data-product-video]');
+            const productVideoPlay = document.querySelector('[data-product-video-play]');
+            const loadProductVideo = () => {
+                if (!productVideo || productVideo.querySelector('source')) return;
+                const source = document.createElement('source');
+                source.src = productVideo.dataset.videoSrc;
+                source.type = 'video/mp4';
+                productVideo.appendChild(source);
+                productVideo.load();
+            };
+
+            if (productVideo && productVideoPlay) {
+                productVideoPlay.addEventListener('click', async () => {
+                    loadProductVideo();
+                    try {
+                        await productVideo.play();
+                        productVideoPlay.hidden = true;
+                    } catch (error) {
+                        productVideoPlay.hidden = false;
+                    }
+                });
+            }
         })();
     </script>
 @endsection
