@@ -1,206 +1,213 @@
-@extends('layouts.app')
+@extends('layouts.marketing')
 
-@section('title', 'Indústria de Máquinas - IMAH')
+@section('title', 'IMAH - Tecnologia em Serigrafia')
+@section('meta_description', 'Tecnologia em serigrafia que dura gerações. Máquinas industriais IMAH para aplicações gráficas, têxteis, automotivas e técnicas.')
+
+@php
+    $segments = [
+        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'image' => asset('img/Gráfico & Promocional.png'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
+        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'image' => asset('img/Têxtil & Calçadista.png'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
+        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'image' => asset('img/Indústria & Técnico.png'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
+        ['title' => 'Vidros & Automotivo', 'icon' => asset('img/Vidros &  Automotivo.svg'), 'image' => asset('img/Vidros &  Automotivo.png'), 'href' => url('/solucoes-e-equipamentos?segmento=vidro')],
+        ['title' => 'Gráfico & Promocional', 'icon' => asset('img/Gráfico & Promocional.svg'), 'image' => asset('img/Gráfico & Promocional.png'), 'href' => url('/solucoes-e-equipamentos?segmento=grafico')],
+        ['title' => 'Têxtil & Calçadista', 'icon' => asset('img/Têxtil & Calçadista.svg'), 'image' => asset('img/Têxtil & Calçadista.png'), 'href' => url('/solucoes-e-equipamentos?segmento=textil')],
+        ['title' => 'Indústria & Técnico', 'icon' => asset('img/Indústria & Técnico.svg'), 'image' => asset('img/Indústria & Técnico.png'), 'href' => url('/solucoes-e-equipamentos?segmento=industria')],
+    ];
+
+    $machines = array_fill(0, 6, [
+        'title' => 'Impressora INDEC CM',
+        'image' => asset('img/produtos-relacionados01.png'),
+        'code' => 'NTHO-105',
+        'href' => url('/produto'),
+    ]);
+
+    $applications = [
+        ['title' => 'Teclado de Membrana', 'image' => asset('img/teclado01.png')],
+        ['title' => 'Junta de Motor', 'image' => asset('img/junta-motor01.png')],
+        ['title' => 'Micro-ondas', 'image' => asset('img/microondas01.png')],
+        ['title' => 'Chinelo', 'image' => asset('img/chinelo01.png')],
+        ['title' => 'Canecas', 'image' => asset('img/canecas01.png')],
+        ['title' => 'Teclado de Membrana', 'image' => asset('img/teclado01.png')],
+        ['title' => 'Junta de Motor', 'image' => asset('img/junta-motor01.png')],
+        ['title' => 'Micro-ondas', 'image' => asset('img/microondas01.png')],
+        ['title' => 'Chinelo', 'image' => asset('img/chinelo01.png')],
+        ['title' => 'Canecas', 'image' => asset('img/canecas01.png')],
+    ];
+@endphp
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero-section" id="inicio">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="animate-title">Tradição e Inovação em Máquinas Serigráficas</h1>
-                    <p class="animate-text">Desde 1993, a IMAH desenvolve e fabrica máquinas, equipamentos e acessórios de alta qualidade para serigrafia e indústria gráfica. Com mais de três décadas de experiência, combinamos tradição e inovação para oferecer soluções duráveis, eficientes e pensadas para a produtividade dos nossos clientes.</p>
-                    <a href="{{ url('/contato') }}" class="btn btn-primary animate-button">Entre em Contato</a>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <img src="{{ asset('img/linea-uv.png') }}" alt="Máquina Serigráfica IMAH Linea UV" class="hero-image">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Carousel Section -->
-    <section class="carousel-section">
-        <div class="container-fluid p-0">
-            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <a href="{{ url('/equipamentos') }}" aria-label="Saiba mais sobre impressoras">
-                            <picture>
-                                <source media="(max-width: 768px)" srcset="{{ asset('img/banner-1-mobile.png') }}">
-                                <img src="{{ asset('img/banner-1-desktop.png') }}" class="d-block w-100 carousel-img" alt="Impressora serigráfica de alta precisão" loading="lazy">
-                            </picture>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="{{ url('/equipamentos') }}" aria-label="Saiba mais sobre envernizadoras">
-                            <picture>
-                                <source media="(max-width: 768px)" srcset="{{ asset('img/banner-2-mobile.png') }}">
-                                <img src="{{ asset('img/banner-2-desktop.png') }}" class="d-block w-100 carousel-img" alt="Envernizadora para acabamento gráfico" loading="lazy">
-                            </picture>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="{{ url('/equipamentos') }}" aria-label="Saiba mais sobre secagem">
-                            <picture>
-                                <source media="(max-width: 768px)" srcset="{{ asset('img/banner-3-mobile.png') }}">
-                                <img src="{{ asset('img/banner-3-desktop.png') }}" class="d-block w-100 carousel-img" alt="Sistema de secagem industrial" loading="lazy">
-                            </picture>
-                        </a>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" aria-label="Anterior">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" aria-label="Próximo">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cards Section -->
-    <section class="cards-section" id="equipamentos">
-        <div class="container">
-            <h2>Equipamentos</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('img/card-1-impressora.png') }}" class="card-img-top" alt="Impressoras serigráficas" loading="lazy">
-                        <div class="card-body">
-                            <h5 class="card-title">Impressoras</h5>
-                            <p class="card-text">Impressoras de alta precisão para indústria.</p>
-                            <a href="{{ url('/equipamentos') }}" class="btn btn-primary">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('img/card-2-envernizadora.png') }}" class="card-img-top" alt="Envernizadoras industriais" loading="lazy">
-                        <div class="card-body">
-                            <h5 class="card-title">Envernizadoras</h5>
-                            <p class="card-text">Equipamentos para acabamento com verniz.</p>
-                            <a href="{{ url('/equipamentos') }}" class="btn btn-primary">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('img/card-3-secagem.png') }}" class="card-img-top" alt="Sistemas de secagem" loading="lazy">
-                        <div class="card-body">
-                            <h5 class="card-title">Secagem</h5>
-                            <p class="card-text">Sistemas de secagem rápidos e seguros.</p>
-                            <a href="{{ url('/equipamentos') }}" class="btn btn-primary">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('img/card-4-laboratorio.png') }}" class="card-img-top" alt="Equipamentos de laboratório" loading="lazy">
-                        <div class="card-body">
-                            <h5 class="card-title">Laboratórios</h5>
-                            <p class="card-text">Equipamentos para testes industriais.</p>
-                            <a href="{{ url('/equipamentos') }}" class="btn btn-primary">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('img/card-5-laminadora.png') }}" class="card-img-top" alt="Laminadoras industriais" loading="lazy">
-                        <div class="card-body">
-                            <h5 class="card-title">Laminadoras</h5>
-                            <p class="card-text">Máquinas para laminação de alta qualidade.</p>
-                            <a href="{{ url('/equipamentos') }}" class="btn btn-primary">Ver Todos</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('img/card-6-acessorios.png') }}" class="card-img-top" alt="Acessórios para máquinas" loading="lazy">
-                        <div class="card-body">
-                            <h5 class="card-title">Acessórios</h5>
-                            <p class="card-text">Peças para otimizar seus equipamentos.</p>
-                            <a href="{{ url('/equipamentos') }}" class="btn btn-primary">Ver Todos</a>
-                        </div>
-                    </div>
+    <section class="home-hero" aria-labelledby="home-title">
+        <div class="home-hero-frame">
+            <video
+                class="home-hero-media"
+                poster="{{ asset('img/video01.png') }}"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Linha industrial de produção IMAH"
+                data-video-src="{{ asset('video/homepage-header-video-optimized.mp4') }}"
+            ></video>
+            <button class="home-hero-video-toggle" type="button" aria-label="Reproduzir vídeo" data-home-hero-video-toggle>
+                <span class="home-hero-video-toggle__play" aria-hidden="true"></span>
+                <span class="home-hero-video-toggle__pause" aria-hidden="true"></span>
+            </button>
+            <div class="home-hero-content">
+                <h1 id="home-title">Tecnologia em Serigrafia que dura gerações.</h1>
+                <div class="home-hero-copy">
+                    <p>We empower organizations across industries to unlock digital opportunities through strategy, consulting.</p>
+                    <a class="btn-imah btn-imah--primary" href="{{ url('/solucoes-e-equipamentos') }}">Encontre sua solução <span aria-hidden="true">↗</span></a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about-section" id="about-section">
+    <section class="segments-section" aria-labelledby="segments-title">
         <div class="container">
-            <h2 class="animate-title text-center">Empresa</h2>
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h3 class="animate-title">Nossa Equipe</h3>
-                    <p class="animate-text">Com uma equipe de profissionais experientes e dedicados, que asseguram a qualidade final dos seus produtos e serviços, a IMAH é reconhecida pela liderança tecnológica e pelo espírito inovador dos seus produtos, que incorporam soluções de última geração, para atender às reais necessidades dos seus clientes, de qualidade e produtividade.</p>
-                    <h3 class="animate-title">Qualidade, Garantia e Assistência Técnica</h3>
-                    <p class="animate-text">Os produtos IMAH incorporam insumos de qualidade reconhecida internacionalmente, homologados pela norma CE, DIN e ISO. Desde o projeto, nossos produtos seguem as recomendações de manufatura das normas DIN, que asseguram intercambiabilidade de peças, durabilidade e fácil reposição.</p>
-                    <p class="animate-text">Adicionalmente à garantia legal, oferecemos garantia de 1 ano contra defeitos de fabricação e de materiais, nas condições constantes do nosso termo de garantia. Oferecemos assistência técnica direta da fábrica, acompanhada do melhor atendimento em serviços de apoio dos nossos consultores e técnicos, sempre à sua disposição com peças e serviços de qualidade.</p>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <img src="{{ asset('img/sobre-imah.jpg') }}" alt="Imah-Indústria de Máquinas" class="about-image">
-                </div>
+            <h2 id="segments-title">O que você <span>imprime?</span></h2>
+            <p class="subtitle">Temos a solução perfeita para seu negócio</p>
+        </div>
+        <div class="segment-scroller">
+            @foreach ($segments as $segment)
+                @include('partials.marketing.segment-card', $segment)
+            @endforeach
+        </div>
+        <div class="container section-link-row">
+            <div class="section-controls" data-scroll-controls=".segment-scroller">
+                <button type="button" data-scroll-direction="prev" aria-label="Segmentos anteriores">‹</button>
+                <button type="button" data-scroll-direction="next" aria-label="Próximos segmentos">›</button>
+            </div>
+            <a href="{{ url('/solucoes-e-equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
+        </div>
+    </section>
+
+    <section class="demand-section" aria-labelledby="demand-title">
+        <div class="container">
+            <h2 id="demand-title"><span>Máquinas</span> de Alta Demanda</h2>
+            <div class="machine-grid">
+                @foreach ($machines as $machine)
+                    @include('partials.marketing.product-card', $machine)
+                @endforeach
+            </div>
+            <a class="all-products" href="{{ url('/solucoes-e-equipamentos') }}">Conheça todas as máquinas <span aria-hidden="true">↗</span></a>
+        </div>
+    </section>
+
+    @include('partials.marketing.marquee')
+
+    <section class="quality-section" id="sobre" aria-labelledby="quality-title">
+        <div class="container quality-showcase">
+            <div class="quality-grid">
+                <img src="{{ asset('img/prod-impressora-index-cm02.png') }}" alt="Detalhe técnico de máquina IMAH">
+                <article class="quality-card">
+                    <h2 id="quality-title">Por que uma <span>Imah dura muitos anos?</span></h2>
+                    <p>Lorem ipsum dolor sit amet consectetur. Lacus ut volutpat ultrices dignissim donec. Leo sit vel amet vulputate nunc facilisis.</p>
+                    <a class="btn-imah btn-imah--primary" href="{{ url('/contato') }}">Conheça mais sobre a IMAH <span aria-hidden="true">↗</span></a>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- E-commerce Section -->
-    <section class="ecommerce-section" id="ecommerce">
+    <section class="stats-section" aria-label="Números IMAH">
         <div class="container">
-            <h2>Explore Nossa Loja Online</h2>
-            <p class="section-subtitle">Encontre máquinas, acessórios e soluções industriais com a qualidade IMAH, diretamente do nosso e-commerce.</p>
-            <div class="ecommerce-parallax">
-                <video class="parallax-video" autoplay muted loop playsinline preload="metadata">
-                    <source src="{{ asset('video/loja-imah.mp4') }}" type="video/mp4">
-                    Seu navegador não suporta vídeos.
-                </video>
+            <div class="stats-row">
+                <article>
+                    <span class="stat-value" data-count-to="30" data-prefix="+">+0</span>
+                    <p class="stat-copy">Anos desenvolvendo equipamentos que definem o padrão de qualidade da indústria brasileira.</p>
+                </article>
+                <article>
+                    <span class="stat-value" data-count-to="100" data-suffix="%">0%</span>
+                    <p class="stat-copy">Tecnologia Nacional. Engenharia própria e peças de reposição sempre disponíveis.</p>
+                </article>
+                <article>
+                    <span class="stat-value" data-count-to="5000" data-prefix="+" data-format="thousands">+0</span>
+                    <p class="stat-copy">Equipamentos ativos diariamente nas maiores linhas de produção do Brasil e da América Latina.</p>
+                </article>
             </div>
-            <div class="text-center mt-4">
-                <a href="https://www.loja.imah.com.br" class="btn btn-primary btn-lg" target="_blank">Visite a Loja Completa</a>
+            <p class="stats-footnote">1 - Estimativas baseadas em benchmarks de mercado e impacto estratégico da marca.<br>2 - Os valores refletem eficiência estratégica ao longo dos projetos, não participação societária ou resultados financeiros diretos.</p>
+        </div>
+    </section>
+
+    <section class="solutions-section" aria-labelledby="solutions-title">
+        <div class="container">
+            <div class="solutions-head">
+                <h2 id="solutions-title">Soluções para qualquer aplicação.</h2>
+                <p>Não importa o substrato ou formato. Temos a tecnologia certa para estampar o seu produto com precisão.</p>
+            </div>
+            <div class="application-scroller">
+                @foreach ($applications as $application)
+                    @include('partials.marketing.application-card', $application)
+                @endforeach
+            </div>
+            <div class="section-link-row">
+                <div class="section-controls" data-scroll-controls=".application-scroller">
+                    <button type="button" data-scroll-direction="prev" aria-label="Aplicações anteriores">‹</button>
+                    <button type="button" data-scroll-direction="next" aria-label="Próximas aplicações">›</button>
+                </div>
+                <a href="{{ url('/solucoes-e-equipamentos') }}">Conheça todas as soluções <span aria-hidden="true">↗</span></a>
             </div>
         </div>
     </section>
+
+    @include('partials.marketing.cta')
 @endsection
 
 @section('scripts')
     <script>
-        // Efeito parallax suave para vídeo com IntersectionObserver
-        const parallaxVideo = document.querySelector('.parallax-video');
-        if (parallaxVideo) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        parallaxVideo.play().catch(error => console.log('Erro ao reproduzir vídeo:', error));
-                    } else {
-                        parallaxVideo.pause();
-                    }
-                });
-            }, { threshold: 0.1 });
-            observer.observe(parallaxVideo);
+        (() => {
+            const video = document.querySelector('.home-hero-media');
+            const toggle = document.querySelector('[data-home-hero-video-toggle]');
+            if (!video || !toggle) return;
 
-            window.addEventListener('scroll', () => {
-                const scrollPosition = window.pageYOffset;
-                const offset = parallaxVideo.getBoundingClientRect().top + scrollPosition;
-                const speed = 0.3;
-                parallaxVideo.style.transform = `translate(-50%, calc(-50% + ${(scrollPosition - offset) * speed}px))`;
+            const canAutoplay = window.matchMedia('(min-width: 769px)').matches
+                && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            const setPlayingState = (isPlaying) => {
+                toggle.classList.toggle('is-playing', isPlaying);
+                toggle.setAttribute('aria-label', isPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo');
+            };
+
+            const loadVideo = () => {
+                if (video.querySelector('source')) return;
+
+                const source = document.createElement('source');
+                source.src = video.dataset.videoSrc;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.load();
+            };
+
+            const unloadVideo = () => {
+                video.pause();
+                video.removeAttribute('src');
+                video.querySelectorAll('source').forEach((source) => source.remove());
+                video.load();
+                setPlayingState(false);
+            };
+
+            const playVideo = async () => {
+                loadVideo();
+
+                try {
+                    await video.play();
+                    setPlayingState(true);
+                } catch (error) {
+                    setPlayingState(false);
+                }
+            };
+
+            toggle.addEventListener('click', () => {
+                if (toggle.classList.contains('is-playing')) {
+                    unloadVideo();
+                    return;
+                }
+
+                playVideo();
             });
-        }
 
-        // Tentar reproduzir o vídeo ao carregar a página
-        window.addEventListener('load', () => {
-            if (parallaxVideo) {
-                parallaxVideo.play().catch(error => console.log('Erro ao iniciar o vídeo:', error));
-            }
-        });
+            window.addEventListener('load', () => {
+                if (canAutoplay) playVideo();
+            }, { once: true });
+        })();
     </script>
 @endsection
