@@ -1,17 +1,58 @@
+# [TÍTULO DA MÁQUINA]
 
-# Descrição
-A **Maquina Ipsum** é o topo da impressão retrô-mod. Une estilo 50s com tech moderna: precisa, durável, ideal p/ tecidos, plásticos e metais.
+<!-- Escreva o título principal da máquina (ex: Index CM 1200) -->
 
-- **XXX:** 2x1x1m  
-- **YYY:** Até 500 impressões/hora
-- **TTT:** 350 kg
-- **WWW:** Aço reforçado com acabamento anticorrosivo
+[IMAGEM-1]
+<!-- Imagem principal / capa -->
 
-# Usabilidade
-Fácil, rápida, versátil. Painel simples, secagem turbo.
+[DESCRICAO]
 
-- Camisetas
-- Embalagens
-- Arte em geral
+<!-- Escreva uma descrição clara e atrativa (máx. 300 caracteres) -->
 
-Pouca manutenção e máxima performance.
+[IMAGEM-2]
+[IMAGEM-3]
+[IMAGEM-4]
+<!-- Imagens adicionais do produto -->
+
+[PDF]
+<!-- Catálogo técnico ou manual (opcional) -->
+
+[VIDEO-1]
+<!-- Vídeo de demonstração (opcional) -->
+
+[APLICACOES]
+
+<!-- Descreva as principais aplicações desta máquina -->
+
+[DIFERENCIAIS]
+
+## Diferencial 1
+[IMAGEM-5]
+**Título:** 
+Descrição do diferencial...
+
+## Diferencial 2
+[IMAGEM-6]
+**Título:** 
+Descrição do diferencial...
+
+## Diferencial 3
+[IMAGEM-7]
+**Título:** 
+Descrição do diferencial...
+
+[ESPECIFICACOES]
+
+### Controle
+- Item 1
+- Item 2
+- Item 3
+
+### Ficha Técnica
+- Item 1
+- Item 2
+- Item 3
+
+### Opcionais
+- Item 1
+- Item 2

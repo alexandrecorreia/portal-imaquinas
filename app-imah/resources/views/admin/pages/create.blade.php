@@ -15,7 +15,11 @@
 
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul class="mb-0">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
 
@@ -83,15 +87,27 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label d-block">Status</label>
                                     <div class="d-flex gap-4">
-                                        <div class="form-check"><input class="form-check-input" type="radio" name="is_active" value="1" {{ old('is_active', 1) == 1 ? 'checked' : '' }}><label>Ativo</label></div>
-                                        <div class="form-check"><input class="form-check-input" type="radio" name="is_active" value="0" {{ old('is_active') == 0 ? 'checked' : '' }}><label>Inativo</label></div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="is_active" value="1" {{ old('is_active', 1) == 1 ? 'checked' : '' }}>
+                                            <label class="form-check-label">Ativo</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="is_active" value="0" {{ old('is_active') == 0 ? 'checked' : '' }}>
+                                            <label class="form-check-label">Inativo</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label d-block">Condição</label>
                                     <div class="d-flex gap-4">
-                                        <div class="form-check"><input class="form-check-input" type="radio" name="condition" value="novo" {{ old('condition', 'novo') == 'novo' ? 'checked' : '' }}><label>Novo</label></div>
-                                        <div class="form-check"><input class="form-check-input" type="radio" name="condition" value="usado" {{ old('condition') == 'usado' ? 'checked' : '' }}><label>Usado</label></div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="condition" value="novo" {{ old('condition', 'novo') == 'novo' ? 'checked' : '' }}>
+                                            <label class="form-check-label">Novo</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="condition" value="usado" {{ old('condition') == 'usado' ? 'checked' : '' }}>
+                                            <label class="form-check-label">Usado</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -99,55 +115,7 @@
                     </div>
                 </div>
 
-                <!-- ====================== MÍDIA DA PÁGINA ====================== -->
-                <div class="card mb-4 border-primary">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">📎 Mídia da Página</h5>
-                    </div>
-                    <div class="card-body">
-
-                        <ul class="nav nav-tabs mb-3">
-                            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#existing">📁 Arquivos Existentes</a></li>
-                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#newupload">⬆️ Novo Upload</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <!-- Arquivos Existentes -->
-                            <div class="tab-pane fade show active" id="existing">
-                                <div class="row" id="existing_media">
-                                    <!-- Preenchido via JavaScript -->
-                                </div>
-                            </div>
-
-                            <!-- Novo Upload -->
-                            <div class="tab-pane fade" id="newupload">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label class="form-label">Imagens <small>(múltiplas)</small></label>
-                                        <input type="file" id="upload_images" multiple accept="image/*" class="form-control">
-                                        <div id="images_preview" class="mt-2 d-flex flex-wrap gap-2"></div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label">Vídeo</label>
-                                        <input type="file" id="upload_video" accept="video/*" class="form-control">
-                                        <div id="video_preview" class="mt-2"></div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label">PDF</label>
-                                        <input type="file" id="upload_pdf" accept=".pdf" class="form-control">
-                                        <div id="pdf_preview" class="mt-2"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="button" id="btn_insert_media" class="btn btn-success mt-3">
-                            Inserir Selecionados no Markdown
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Conteúdo Markdown -->
+                <!-- Editor Markdown -->
                 <div class="mb-3">
                     <label for="content" class="form-label">Conteúdo (Markdown)</label>
                     <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror">{{ old('content', $defaultTemplate) }}</textarea>
@@ -165,80 +133,146 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-const easyMDE = new EasyMDE({ element: document.getElementById('content'), forceSync: true });
+const easyMDE = new EasyMDE({
+    element: document.getElementById('content'),
+    forceSync: true,
+    toolbar: [
+        "bold", "italic", "heading", "|",
+        "quote", "unordered-list", "ordered-list", "|",
+        "link", "|",
+        {
+            name: "upload-image",
+            action: function() {
+                // Cria um input file temporário
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.multiple = true;
+                
+                input.onchange = function() {
+                    if (!input.files.length) return;
+                    
+                    const formData = new FormData();
+                    for (let file of input.files) {
+                        formData.append('arquivo', file);
+                        formData.append('tipo', 'imagem');
+                        formData.append('descricao', document.getElementById('slug').value || '');
+                    }
+                    formData.append('_token', '{{ csrf_token() }}');
+                    
 
-let selectedImages = [], selectedVideo = '', selectedPdf = '';
+                    $.ajax({
+                        url: '{{ route("admin.upload") }}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            const generatedName = response.generated_name;
+                            if (generatedName) {
+                                easyMDE.codemirror.replaceSelection(`[IMAGEM] ${generatedName}\n\n`);
+                            }
+                        },
+                        error: function() {
+                            alert('Erro ao fazer upload da imagem');
+                        }
+                    });
+                };
+                input.click();
+            },
+            className: "fa fa-image",
+            title: "Upload de Imagem"
+        },
+        {
+            name: "upload-video",
+            action: function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'video/*';
+                
+                input.onchange = function() {
+                    const formData = new FormData();
+                    formData.append('arquivo', input.files[0]);
+                    formData.append('tipo', 'video');
+                    formData.append('descricao', document.getElementById('slug').value || '');                    
+                    formData.append('_token', '{{ csrf_token() }}');
 
-// Upload de novos arquivos
-function uploadFiles(files, tipo, callback) {
+                    $.ajax({
+                        url: '{{ route("admin.upload") }}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            if (response.generated_name) {
+                                easyMDE.codemirror.replaceSelection(`[VIDEO] ${response.generated_name}\n\n`);
+                            }
+                        }
+                    });
+                };
+                input.click();
+            },
+            className: "fa fa-video-camera",
+            title: "Upload de Vídeo"
+        },
+        {
+            name: "upload-pdf",
+            action: function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.pdf';
+                
+                input.onchange = function() {
+                    const formData = new FormData();
+                    formData.append('arquivo', input.files[0]);
+                    formData.append('tipo', 'pdf');
+                    formData.append('descricao', document.getElementById('slug').value || '');                    
+                    formData.append('_token', '{{ csrf_token() }}');
+
+                    $.ajax({
+                        url: '{{ route("admin.upload") }}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            if (response.generated_name) {
+                                easyMDE.codemirror.replaceSelection(`[PDF] ${response.generated_name}\n\n`);
+                            }
+                        }
+                    });
+                };
+                input.click();
+            },
+            className: "fa fa-file-pdf-o",
+            title: "Upload de PDF"
+        },
+        "|", "preview", "side-by-side", "fullscreen"
+    ]
+});
+
+function preview() {
     const formData = new FormData();
-    for (let file of files) {
-        formData.append('arquivo', file);
-        formData.append('tipo', tipo);
-    }
+    formData.append('title', document.getElementById('title').value);
+    formData.append('slug', document.getElementById('slug').value);
+    formData.append('content', easyMDE.value());
     formData.append('_token', '{{ csrf_token() }}');
 
-    $.ajax({
-        url: '{{ route("admin.upload") }}',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            const nomes = response.generated_name ? [response.generated_name] : [];
-            callback(nomes);
-        },
-        error: function() { alert('Erro ao fazer upload'); }
-    });
+    fetch('{{ route('admin.pages.preview') }}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        const newWindow = window.open('', '_blank');
+        newWindow.document.write(data);
+        newWindow.document.close();
+    })
+    .catch(error => console.error('Erro ao visualizar:', error));
 }
 
-// Handlers de upload
-$('#upload_images').on('change', function() {
-    uploadFiles(this.files, 'imagem', function(filenames) {
-        selectedImages = selectedImages.concat(filenames);
-        renderImagesPreview();
-    });
-});
-
-$('#upload_video').on('change', function() {
-    uploadFiles(this.files, 'video', function(filenames) {
-        selectedVideo = filenames[0] || '';
-        renderVideoPreview();
-    });
-});
-
-$('#upload_pdf').on('change', function() {
-    uploadFiles(this.files, 'pdf', function(filenames) {
-        selectedPdf = filenames[0] || '';
-        renderPdfPreview();
-    });
-});
-
-// Render previews
-function renderImagesPreview() {
-    $('#images_preview').empty();
-    selectedImages.forEach(name => $('#images_preview').append(`<div class="badge bg-primary me-1">${name}</div>`));
-}
-function renderVideoPreview() {
-    $('#video_preview').html(selectedVideo ? `<div class="badge bg-info">${selectedVideo}</div>` : '');
-}
-function renderPdfPreview() {
-    $('#pdf_preview').html(selectedPdf ? `<div class="badge bg-danger">${selectedPdf}</div>` : '');
-}
-
-// Inserir no Markdown
-$('#btn_insert_media').on('click', function() {
-    let header = '';
-    if (selectedImages.length) header += `[images]: ${selectedImages.join(', ')}\n`;
-    if (selectedVideo) header += `[video]: ${selectedVideo}\n`;
-    if (selectedPdf) header += `[pdf]: ${selectedPdf}\n`;
-
-    if (header) {
-        easyMDE.value(header + '\n\n' + easyMDE.value().trim());
-        alert('✅ Mídia inserida com sucesso!');
-    } else {
-        alert('Selecione pelo menos um arquivo.');
-    }
+document.getElementById('page-form').addEventListener('submit', function() {
+    easyMDE.toTextArea();
 });
 </script>
 @endsection

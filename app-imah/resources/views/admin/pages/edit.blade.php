@@ -15,11 +15,7 @@
 
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <ul class="mb-0">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
         </div>
     @endif
 
@@ -74,9 +70,7 @@
                                         <input class="form-check-input" type="checkbox" name="segments[]" 
                                                id="segment_{{ $segment->id }}" value="{{ $segment->id }}" 
                                                {{ $page->segments->contains($segment->id) || in_array($segment->id, old('segments', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="segment_{{ $segment->id }}">
-                                            {{ $segment->name }}
-                                        </label>
+                                        <label class="form-check-label" for="segment_{{ $segment->id }}">{{ $segment->name }}</label>
                                     </div>
                                 </div>
                             @endforeach
@@ -125,45 +119,10 @@
                     </div>
                 </div>
 
-                <!-- ====================== MÍDIA DA PÁGINA ====================== -->
-                <div class="card mb-4 border-primary">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">📎 Mídia da Página</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-4">
-                            <div class="col-md-4">
-                                <label class="form-label">Imagens <small>(múltiplas)</small></label>
-                                <input type="file" id="upload_images" multiple accept="image/*" class="form-control">
-                                <div id="images_preview" class="mt-2 d-flex flex-wrap gap-2"></div>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Vídeo <small>(único)</small></label>
-                                <input type="file" id="upload_video" accept="video/*" class="form-control">
-                                <div id="video_preview" class="mt-2"></div>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">PDF <small>(único)</small></label>
-                                <input type="file" id="upload_pdf" accept=".pdf" class="form-control">
-                                <div id="pdf_preview" class="mt-2"></div>
-                            </div>
-                        </div>
-
-                        <button type="button" id="btn_insert_media" class="btn btn-success mt-3">
-                            Inserir no Markdown
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Conteúdo Markdown -->
+                <!-- Editor Markdown -->
                 <div class="mb-3">
                     <label for="content" class="form-label">Conteúdo (Markdown)</label>
-                    <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror">
-                        {{ old('content', $page->content) }}
-                    </textarea>
-                    @error('content')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror">{{ old('content', $page->content) }}</textarea>
                 </div>
 
                 <button type="button" class="btn btn-secondary mb-3" onclick="preview()">Visualizar</button>
@@ -180,136 +139,140 @@
 <script>
 const easyMDE = new EasyMDE({
     element: document.getElementById('content'),
-    forceSync: true
+    forceSync: true,
+    toolbar: [
+        "bold", "italic", "heading", "strikethrough", "|",
+        "quote", "unordered-list", "ordered-list", "|",
+        "link", "|",
+        {
+            name: "upload-image",
+            action: function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.multiple = true;
+                
+                input.onchange = function() {
+                    if (!input.files.length) return;
+                    const formData = new FormData();
+                    for (let file of input.files) {
+                        formData.append('arquivo', file);
+                        formData.append('tipo', 'imagem');
+                        formData.append('descricao', document.getElementById('slug').value || '');                        
+                    }
+                    formData.append('_token', '{{ csrf_token() }}');
+                    
+
+                    $.ajax({
+                        url: '{{ route("admin.upload") }}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            if (response.generated_name) {
+                                easyMDE.codemirror.replaceSelection(`[IMAGEM] ${response.generated_name}\n\n`);
+                            }
+                        },
+                        error: function() {
+                            alert('Erro ao fazer upload da imagem');
+                        }
+                    });
+                };
+                input.click();
+            },
+            className: "fa fa-image",
+            title: "Upload de Imagem"
+        },
+        {
+            name: "upload-video",
+            action: function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'video/*';
+                
+                input.onchange = function() {
+                    const formData = new FormData();
+                    formData.append('arquivo', input.files[0]);
+                    formData.append('tipo', 'video');
+                    formData.append('descricao', document.getElementById('slug').value || '');                    
+                    formData.append('_token', '{{ csrf_token() }}');
+
+                    $.ajax({
+                        url: '{{ route("admin.upload") }}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            if (response.generated_name) {
+                                easyMDE.codemirror.replaceSelection(`[VIDEO] ${response.generated_name}\n\n`);
+                            }
+                        }
+                    });
+                };
+                input.click();
+            },
+            className: "fa fa-video-camera",
+            title: "Upload de Vídeo"
+        },
+        {
+            name: "upload-pdf",
+            action: function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.pdf';
+                
+                input.onchange = function() {
+                    const formData = new FormData();
+                    formData.append('arquivo', input.files[0]);
+                    formData.append('tipo', 'pdf');
+                    formData.append('descricao', document.getElementById('slug').value || '');                    
+                    formData.append('_token', '{{ csrf_token() }}');
+
+                    $.ajax({
+                        url: '{{ route("admin.upload") }}',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            if (response.generated_name) {
+                                easyMDE.codemirror.replaceSelection(`[PDF] ${response.generated_name}\n\n`);
+                            }
+                        }
+                    });
+                };
+                input.click();
+            },
+            className: "fa fa-file-pdf-o",
+            title: "Upload de PDF"
+        },
+        "|", "preview", "side-by-side", "fullscreen", "|", "guide"
+    ]
 });
 
-let selectedImages = [];
-let selectedVideo = '';
-let selectedPdf = '';
+function preview() {
+    const formData = new FormData();
+    formData.append('title', document.getElementById('title').value);
+    formData.append('slug', document.getElementById('slug').value);
+    formData.append('content', easyMDE.value());
+    formData.append('_token', '{{ csrf_token() }}');
 
-$(document).ready(function() {
-
-    function uploadFiles(files, tipo, callback) {
-        const formData = new FormData();
-        for (let file of files) {
-            formData.append('arquivo', file);
-            formData.append('tipo', tipo);
-        }
-        formData.append('_token', '{{ csrf_token() }}');
-
-        $.ajax({
-            url: '{{ route("admin.upload") }}',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                const nomes = response.generated_name ? [response.generated_name] : (response.nomes || []);
-                callback(nomes);
-            },
-            error: function() {
-                alert('Erro ao fazer upload');
-            }
-        });
-    }
-
-    // Uploads
-    $('#upload_images').on('change', function() {
-        uploadFiles(this.files, 'imagem', function(filenames) {
-            selectedImages = selectedImages.concat(filenames);
-            renderImagesPreview();
-        });
+    fetch('{{ route('admin.pages.preview') }}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => r.text())
+    .then(data => {
+        const win = window.open('', '_blank');
+        win.document.write(data);
+        win.document.close();
     });
+}
 
-    $('#upload_video').on('change', function() {
-        uploadFiles(this.files, 'video', function(filenames) {
-            selectedVideo = filenames[0] || '';
-            renderVideoPreview();
-        });
-    });
-
-    $('#upload_pdf').on('change', function() {
-        uploadFiles(this.files, 'pdf', function(filenames) {
-            selectedPdf = filenames[0] || '';
-            renderPdfPreview();
-        });
-    });
-
-    // Render com botão de remover
-    function renderImagesPreview() {
-        $('#images_preview').empty();
-        selectedImages.forEach((name, index) => {
-            const badge = $(`
-                <div class="badge bg-primary me-1 mb-1 d-inline-flex align-items-center">
-                    ${name}
-                    <span class="ms-2 remove-file" data-type="image" data-index="${index}" style="cursor:pointer; font-weight:bold;">×</span>
-                </div>
-            `);
-            $('#images_preview').append(badge);
-        });
-    }
-
-    function renderVideoPreview() {
-        $('#video_preview').html(selectedVideo ? `
-            <div class="badge bg-info d-inline-flex align-items-center">
-                ${selectedVideo}
-                <span class="ms-2 remove-file" data-type="video" style="cursor:pointer; font-weight:bold;">×</span>
-            </div>` : '');
-    }
-
-    function renderPdfPreview() {
-        $('#pdf_preview').html(selectedPdf ? `
-            <div class="badge bg-danger d-inline-flex align-items-center">
-                ${selectedPdf}
-                <span class="ms-2 remove-file" data-type="pdf" style="cursor:pointer; font-weight:bold;">×</span>
-            </div>` : '');
-    }
-
-    // Remover arquivo
-    $(document).on('click', '.remove-file', function() {
-        const type = $(this).data('type');
-        const index = $(this).data('index');
-
-        if (type === 'image') {
-            selectedImages.splice(index, 1);
-            renderImagesPreview();
-        } else if (type === 'video') {
-            selectedVideo = '';
-            renderVideoPreview();
-        } else if (type === 'pdf') {
-            selectedPdf = '';
-            renderPdfPreview();
-        }
-    });
-
-    // Inserir no Markdown
-    $('#btn_insert_media').on('click', function() {
-        let content = easyMDE.value();
-
-        // Função para atualizar ou adicionar linha
-        function updateOrAddLine(tag, newFiles) {
-            const regex = new RegExp(`\\[${tag}\\]:.*?(?=\\n|$)`, 'i');
-            const match = content.match(regex);
-
-            if (match) {
-                // Já existe a linha → atualiza
-                let existing = match[0].replace(`[${tag}]:`, '').trim();
-                let allFiles = existing ? existing.split(',').map(f => f.trim()) : [];
-                allFiles = [...new Set([...allFiles, ...newFiles])]; // remove duplicados
-                content = content.replace(regex, `[${tag}]: ${allFiles.join(', ')}`);
-            } else if (newFiles.length > 0) {
-                // Não existe → adiciona no topo
-                content = `[${tag}]: ${newFiles.join(', ')}\n` + content;
-            }
-        }
-
-        if (selectedImages.length > 0) updateOrAddLine('images', selectedImages);
-        if (selectedVideo) updateOrAddLine('video', [selectedVideo]);
-        if (selectedPdf) updateOrAddLine('pdf', [selectedPdf]);
-
-        easyMDE.value(content.trim());
-        alert('Mídia atualizada com sucesso no Markdown!');
-    });
+document.getElementById('page-form').addEventListener('submit', function() {
+    easyMDE.toTextArea();
 });
 </script>
 @endsection
