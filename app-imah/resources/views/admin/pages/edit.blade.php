@@ -257,18 +257,28 @@ function preview() {
     formData.append('title', document.getElementById('title').value);
     formData.append('slug', document.getElementById('slug').value);
     formData.append('content', easyMDE.value());
+    formData.append('equipament_id', document.getElementById('equipament_id').value);
+    formData.append('is_active', document.querySelector('input[name="is_active"]:checked')?.value || '');
+    formData.append('condition', document.querySelector('input[name="condition"]:checked')?.value || '');
+
+    // Segmentos (checkboxes)
+    document.querySelectorAll('input[name="segments[]"]:checked').forEach(cb => {
+        formData.append('segments[]', cb.value);
+    });
+
     formData.append('_token', '{{ csrf_token() }}');
 
     fetch('{{ route('admin.pages.preview') }}', {
         method: 'POST',
         body: formData
     })
-    .then(r => r.text())
+    .then(response => response.text())
     .then(data => {
-        const win = window.open('', '_blank');
-        win.document.write(data);
-        win.document.close();
-    });
+        const newWindow = window.open('', '_blank');
+        newWindow.document.write(data);
+        newWindow.document.close();
+    })
+    .catch(error => console.error('Erro ao visualizar:', error));
 }
 
 document.getElementById('page-form').addEventListener('submit', function() {

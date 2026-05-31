@@ -1,58 +1,124 @@
-# [TÍTULO DA MÁQUINA]
+<!-- Até 4 imagens -->
+[BLOCO:SLIDES]
 
-<!-- Escreva o título principal da máquina (ex: Index CM 1200) -->
 
-[IMAGEM-1]
-<!-- Imagem principal / capa -->
+[/BLOCO:SLIDES]
 
+
+<!-- Máximo 290 caracteres ou 6 linhas -->
+[BLOCO:INTRODUCAO]
+
+
+
+[/BLOCO:INTRODUCAO]
+<!--------------------------------------->
+
+
+<!-- Máximo 300 caracteres ou 7 linhas -->
+[BLOCO:DESCRICAO]
+
+
+
+[/BLOCO:DESCRICAO]
+<!--------------------------------------->
+
+
+<!-- Caminho ou URL do PDF -->
+[BLOCO:PDF]
+
+
+[/BLOCO:PDF]
+<!--------------------------------------->
+
+
+<!-- URL do vídeo (YouTube, Vimeo, etc.) -->
+[BLOCO:VIDEO]
+
+
+[/BLOCO:VIDEO]
+<!--------------------------------------->
+
+
+[BLOCO:DIFERENCIAIS]
+
+[CARD]
+
+[IMAGEM][/IMAGEM]
+
+[TITULO]
+
+[/TITULO]
+
+<!-- Máximo 130 caracteres -------------->
 [DESCRICAO]
 
-<!-- Escreva uma descrição clara e atrativa (máx. 300 caracteres) -->
+[/DESCRICAO]
+<!--------------------------------------->
 
-[IMAGEM-2]
-[IMAGEM-3]
-[IMAGEM-4]
-<!-- Imagens adicionais do produto -->
+[/CARD]
 
-[PDF]
-<!-- Catálogo técnico ou manual (opcional) -->
 
-[VIDEO-1]
-<!-- Vídeo de demonstração (opcional) -->
 
-[APLICACOES]
+[CARD]
 
-<!-- Descreva as principais aplicações desta máquina -->
+[IMAGEM] [/IMAGEM]
 
-[DIFERENCIAIS]
+[TITULO] [/TITULO]
 
-## Diferencial 1
-[IMAGEM-5]
-**Título:** 
-Descrição do diferencial...
+<!-- Máximo 130 caracteres -------------->
+[DESCRICAO]
 
-## Diferencial 2
-[IMAGEM-6]
-**Título:** 
-Descrição do diferencial...
+[/DESCRICAO]
+<!--------------------------------------->
 
-## Diferencial 3
-[IMAGEM-7]
-**Título:** 
-Descrição do diferencial...
+[/CARD]
 
-[ESPECIFICACOES]
 
-### Controle
-- Item 1
-- Item 2
-- Item 3
+[CARD]
 
-### Ficha Técnica
-- Item 1
-- Item 2
-- Item 3
+[IMAGEM] [/IMAGEM]
 
-### Opcionais
-- Item 1
-- Item 2
+[TITULO] [/TITULO]
+
+<!-- Máximo 130 caracteres -------------->
+[DESCRICAO]
+
+[/DESCRICAO]
+<!--------------------------------------->
+
+[/CARD]
+
+[/BLOCO:DIFERENCIAIS]
+
+
+[BLOCO:ESPECIFICACOES]
+
+<!-- Até 10 itens -->
+<!-- Máximo 115 caracteres por item -->
+<!-- - Item -->
+<!-- - Item -->
+[CONTROLE]
+
+[/CONTROLE]
+<!--------------------------------------->
+
+
+<!-- Até 10 itens -->
+<!-- Máximo 115 caracteres por item -->
+<!-- - Item -->
+<!-- - Item -->
+[FICHA_TECNICA]
+
+[/FICHA_TECNICA]
+<!--------------------------------------->
+
+<!-- Até 10 itens -->
+<!-- Máximo 115 caracteres por item -->
+<!-- - Item -->
+<!-- - Item -->
+[OPCIONAIS]
+
+[/OPCIONAIS]
+<!--------------------------------------->
+
+[/BLOCO:ESPECIFICACOES]

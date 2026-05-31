@@ -7,6 +7,7 @@ use App\Models\Equipament;
 use App\Models\Segment;
 use App\Models\Upload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use Parsedown;
 
@@ -127,15 +128,84 @@ class PageController extends Controller
         $page->title = $request->input('title');
         $page->slug = $request->input('slug');
         $page->content = $request->input('content');
-        $page->equipment = $request->input('equipment');
-        $page->images = array_filter(array_map('trim', explode(',', $request->input('images', ''))));
-        $page->video = $request->input('video');
-        $page->pdf = $request->input('pdf');
+        $page->equipament = ( !empty( $request->input('equipament_id') ) ) 
+                            ? Equipament::find($request->input('equipament_id'))->name
+                            : '';
 
-        // Chama o parseContent pra preencher content_html
-        $page->parseContent();
+        $page->slide = $this->parseFilesBlock( $page->content,'SLIDES', 'image' );
+        $page->introduction = $this->parseTextBlock( $page->content, 'INTRODUCAO' );
+        $page->description = $this->parseTextBlock( $page->content, 'DESCRICAO');
+        $page->pdf = $this->parseFilesBlock( $page->content,'PDF', 'pdf' );
+
+        $segmentsIds = $request->input('segments', []);
+                
+        $page->segments = (!empty($segmentsIds)) 
+            ? Segment::whereIn('id', $segmentsIds)
+                    ->orderBy('description')
+                    ->get() 
+            : collect();
+
+        Log::info($page->pdf);
 
         return view('admin.pages.preview', compact('page'));     
+    }
+
+    private function parseTextBlock($content, $block)
+    {
+        $pattern = '/\[BLOCO:' . preg_quote($block, '/') . '\](.*?)\[\/BLOCO:' . preg_quote($block, '/') . '\]/is';
+        
+        preg_match( $pattern, $content, $matches);
+
+        if (empty($matches[1])) return '';
+
+        $text = $matches[1];
+
+        // Remove a linha de comentário
+        $text = preg_replace('/<!--.*?-->/s', '', $text);
+
+        // Remove linhas em branco extras no início e fim
+        $text = trim($text);
+
+        return $text;        
+    }
+
+    private function parseFilesBlock($content, $block, $typeFile )
+    {
+        $pattern = '/\[BLOCO:' . preg_quote(trim($block), '/') . '\](.*?)\[\/BLOCO:' . preg_quote(trim($block), '/') . '\]/is';    
+
+        preg_match($pattern, $content, $matches);
+        
+        $slidesBlock = $matches[1];
+
+        if( $typeFile == "image")
+            preg_match_all('/\[IMAGEM\]\s*(.+?)(?=\n|\[|$)/is', $slidesBlock, $matches);
+
+        if( $typeFile == "video")
+            preg_match_all('/\[VIDEO\]\s*(.+?)(?=\n|\[|$)/is', $slidesBlock, $matches);
+
+        if( $typeFile == "pdf")
+            preg_match_all('/\[PDF\]\s*(.+?)(?=\n|\[|$)/is', $slidesBlock, $matches);
+        
+        $fileNames = array_map('trim', $matches[1]);
+
+        // Busca as imagens no banco
+        $uploads = Upload::whereIn('generated_name', $fileNames)
+                     ->where('type', $typeFile)
+                     ->get()
+                     ->keyBy('generated_name');
+
+        $filesUrls = [];
+
+        foreach( $fileNames as $name ){
+            if ($upload = $uploads->get($name)) {
+                $filesUrls[] = asset('storage/' . $upload->path);
+            } else {
+                // Imagem não encontrada → placeholder
+                $filesUrls[] = 'https://placehold.in/300x200@2x.png/dark';
+            }
+        }
+        
+        return $filesUrls;
     }
 
     public function dashboard()
