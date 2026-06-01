@@ -132,11 +132,16 @@ class PageController extends Controller
                             ? Equipament::find($request->input('equipament_id'))->name
                             : '';
 
-        $page->slide = $this->parseFilesBlock( $page->content,'SLIDES', 'image' );
+        $page->slide        = $this->parseFilesBlock( $page->content,'SLIDES', 'image' );
         $page->introduction = $this->parseTextBlock( $page->content, 'INTRODUCAO' );
-        $page->description = $this->parseTextBlock( $page->content, 'DESCRICAO');
-        $page->pdf = $this->parseFilesBlock( $page->content,'PDF', 'pdf' );
-        $page->video = $this->parseFilesBlock( $page->content,'VIDEO', 'video' );
+        $page->description  = $this->parseTextBlock( $page->content, 'DESCRICAO');
+        $page->pdf          = $this->parseFilesBlock( $page->content,'PDF', 'pdf' );
+        $page->video        = $this->parseFilesBlock( $page->content,'VIDEO', 'video' );
+        $page->temp         = $this->parseTextBlock( $page->content, 'DIFERENCIAIS');
+        $page->cards        = $this->parseTextBlock( $page->temp, 'CARD');
+
+        // Log::info( print_r( $page->temp,true ) );
+        // Log::info( print_r( $page->cards,true ) );
 
         $segmentsIds = $request->input('segments', []);
                 
@@ -146,8 +151,6 @@ class PageController extends Controller
                     ->get() 
             : collect();
 
-        Log::info($page->pdf);
-
         return view('admin.pages.preview', compact('page'));     
     }
 
@@ -156,8 +159,13 @@ class PageController extends Controller
         $pattern = '/\[BLOCO:' . preg_quote($block, '/') . '\](.*?)\[\/BLOCO:' . preg_quote($block, '/') . '\]/is';
         
         preg_match( $pattern, $content, $matches);
+        
+        Log::info( print_r( $block ,true ) );
+        
+        if( $block === "DIFERENCIAIS" )
+            Log::info( print_r( $matches[1] ,true ) );
 
-        if (empty($matches[1])) return '';
+        if( empty($matches[1]) ) return '';
 
         $text = $matches[1];
 

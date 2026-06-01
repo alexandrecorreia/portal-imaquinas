@@ -45,14 +45,9 @@
 
 [IMAGEM]
 
-[TITULO]
-
-[/TITULO]
-
+### TITULO
 <!-- Máximo 130 caracteres -------------->
-[DESCRICAO]
 
-[/DESCRICAO]
 <!--------------------------------------->
 
 [/CARD]
@@ -63,14 +58,10 @@
 
 [IMAGEM]
 
-[TITULO] [/TITULO]
-
+### TITULO
 <!-- Máximo 130 caracteres -------------->
-[DESCRICAO]
 
-[/DESCRICAO]
 <!--------------------------------------->
-
 [/CARD]
 
 
@@ -78,12 +69,9 @@
 
 [IMAGEM]
 
-[TITULO] [/TITULO]
-
+### TITULO
 <!-- Máximo 130 caracteres -------------->
-[DESCRICAO]
 
-[/DESCRICAO]
 <!--------------------------------------->
 
 [/CARD]
