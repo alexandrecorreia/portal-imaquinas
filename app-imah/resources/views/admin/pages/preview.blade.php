@@ -81,20 +81,22 @@
         </div>
     </section>
 
+    @if( isset($page->video[0]) )
     <section class="video-band video-band--product" aria-label="Vídeo do produto">
         <video
             class="product-video"
-            poster="{{ asset('img/prod-impressora-index-cm02.png') }}"
+            poster="{{ asset('img/pre-load-video.png') }}"
             playsinline
             controls
             preload="none"
             data-product-video
-            data-video-src="{{ asset('video/index_cm_2-optimized.mp4') }}"
+            data-video-src="{{ url($page->video[0]) }}"
         ></video>
         <button class="play-button" type="button" data-product-video-play>
             <span aria-hidden="true">▶</span> Assistir o Vídeo
         </button>
     </section>
+    @endif
 
     <section class="features-section" id="diferenciais">
         <div class="container">

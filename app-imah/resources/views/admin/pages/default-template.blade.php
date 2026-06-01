@@ -31,7 +31,7 @@
 <!--------------------------------------->
 
 
-<!-- URL do vídeo (YouTube, Vimeo, etc.) -->
+<!-- Vídeo ------------------------------>
 [BLOCO:VIDEO]
 
 
@@ -43,7 +43,7 @@
 
 [CARD]
 
-[IMAGEM][/IMAGEM]
+[IMAGEM]
 
 [TITULO]
 
@@ -61,7 +61,7 @@
 
 [CARD]
 
-[IMAGEM] [/IMAGEM]
+[IMAGEM]
 
 [TITULO] [/TITULO]
 
@@ -76,7 +76,7 @@
 
 [CARD]
 
-[IMAGEM] [/IMAGEM]
+[IMAGEM]
 
 [TITULO] [/TITULO]
 

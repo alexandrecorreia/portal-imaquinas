@@ -136,6 +136,7 @@ class PageController extends Controller
         $page->introduction = $this->parseTextBlock( $page->content, 'INTRODUCAO' );
         $page->description = $this->parseTextBlock( $page->content, 'DESCRICAO');
         $page->pdf = $this->parseFilesBlock( $page->content,'PDF', 'pdf' );
+        $page->video = $this->parseFilesBlock( $page->content,'VIDEO', 'video' );
 
         $segmentsIds = $request->input('segments', []);
                 
